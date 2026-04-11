@@ -127,10 +127,6 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Placeholder note */}
-        <p className="mt-6 text-center text-slate-400 text-xs">
-          Las imágenes son placeholders. Reemplázalas en <code className="bg-slate-100 px-1 rounded">src/data/gallery.js</code>
-        </p>
       </div>
 
       {/* Lightbox */}

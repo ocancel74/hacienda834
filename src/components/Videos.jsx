@@ -108,10 +108,6 @@ export default function Videos() {
           ))}
         </div>
 
-        <p className="mt-6 text-center text-slate-400 text-xs">
-          Videos próximamente. Agrégalos en{' '}
-          <code className="bg-slate-100 px-1 rounded">src/data/gallery.js</code>
-        </p>
       </div>
     </section>
   )
