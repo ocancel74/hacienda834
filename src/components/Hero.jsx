@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { Phone, MessageCircle, ChevronDown, Star } from 'lucide-react'
 import { contact } from '../data/contact'
+import CalendarModal from './CalendarModal'
 
 export default function Hero() {
+  const [showCalendar, setShowCalendar] = useState(false)
   const whatsappUrl = `${contact.whatsapp}?text=${encodeURIComponent(contact.whatsappMessage)}`
 
   return (
@@ -31,14 +34,20 @@ export default function Hero() {
       {/* ── Main content ────────────────────────────────────────────────────── */}
       <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto pt-24 pb-32">
 
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-xs sm:text-sm font-medium px-4 py-2 rounded-full mb-8 animate-fade-in">
+        {/* Badge — abre el calendario al hacer clic */}
+        <button
+          onClick={() => setShowCalendar(true)}
+          className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/40 text-white/90 text-xs sm:text-sm font-medium px-4 py-2 rounded-full mb-8 animate-fade-in transition-all cursor-pointer"
+        >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
           </span>
           Reservaciones Disponibles
-        </div>
+        </button>
+
+        {/* Modal calendario */}
+        {showCalendar && <CalendarModal onClose={() => setShowCalendar(false)} />}
 
         {/* Headline */}
         <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-white mb-4 leading-none animate-fade-in-up">
