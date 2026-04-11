@@ -9,24 +9,14 @@ export default function Hero() {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* ── Gradient background ─────────────────────────────────────────────── */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pool-900 via-pool-800 to-pool-600" />
-
-      {/* ── Decorative blobs ────────────────────────────────────────────────── */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-pool-400/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-pool-300/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-pool-500/10 rounded-full blur-3xl" />
-      </div>
-
-      {/* ── Dot grid overlay ────────────────────────────────────────────────── */}
+      {/* ── Background image + overlay ──────────────────────────────────────── */}
+      {/* Para cambiar la imagen: reemplaza /hero.jpg en public/ por tu foto   */}
       <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
+        className="absolute inset-0 bg-cover bg-top bg-no-repeat"
+        style={{ backgroundImage: "url('/hero.jpg')" }}
       />
+      {/* Overlay oscuro para que el texto sea legible */}
+      <div className="absolute inset-0 bg-gradient-to-br from-pool-900/80 via-pool-800/70 to-pool-600/60" />
 
       {/* ── Wave bottom ─────────────────────────────────────────────────────── */}
       <div className="absolute bottom-0 left-0 right-0">
