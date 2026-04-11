@@ -21,7 +21,7 @@ export const galleryImages = [
   },
   {
     id:  3,
-    src: 'https://placehold.co/800x600/075985/ffffff?text=BBQ+%26+Terraza',
+    src: '/foto-bbq.jpg',
     alt: 'Terraza y área de BBQ',
     label: 'Terraza',
   },
