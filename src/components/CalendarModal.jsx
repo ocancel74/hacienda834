@@ -9,8 +9,7 @@ import { X, Calendar, ExternalLink } from 'lucide-react'
 // ─────────────────────────────────────────────────────────────────────────────
 
 const CALENDAR_EMBED_URL =
-  'https://calendar.google.com/calendar/embed?src=TU_CALENDAR_ID%40group.calendar.google.com&ctz=America%2FNew_York&mode=MONTH&bgcolor=%23ffffff&color=%230ea5e9&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&hl=es'
-  // ↑ Reemplaza esto con tu URL real de Google Calendar
+  'https://calendar.google.com/calendar/embed?src=9c716b81df3c1a919980dda75de7cbbdd16c1714173c086c1f0ddd619d7f5f88%40group.calendar.google.com&ctz=America%2FNew_York&mode=MONTH&bgcolor=%23ffffff&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&hl=es'
 
 export default function CalendarModal({ onClose }) {
   return (
