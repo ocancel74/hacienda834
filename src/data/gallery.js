@@ -22,7 +22,7 @@ export const galleryImages = [
   {
     id:  3,
     src: '/foto-bbq.jpg',
-    alt: 'Terraza y área de BBQ',
+    alt: 'Area de BBQ',
     label: 'Terraza',
   },
   {
