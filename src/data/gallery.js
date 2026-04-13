@@ -27,7 +27,7 @@ export const galleryImages = [
   },
   {
     id:  4,
-    src: 'https://placehold.co/800x600/0c4a6e/ffffff?text=Cancha+Baloncesto',
+    src: '/Cancha.jpeg',
     alt: 'Cancha de baloncesto',
     label: 'Cancha',
   },
