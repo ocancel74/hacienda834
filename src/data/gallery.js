@@ -15,7 +15,7 @@ export const galleryImages = [
   },
   {
     id:  2,
-    src: 'https://placehold.co/800x600/0369a1/ffffff?text=Área+Recreativa',
+    src: 'vista-general',
     alt: 'Área recreativa y patio',
     label: 'Área Recreativa',
   },
@@ -33,7 +33,7 @@ export const galleryImages = [
   },
   {
     id:  5,
-    src: 'https://placehold.co/800x600/e4a54d/ffffff?text=Área+Familiar',
+    src: '/Sombrillas-Bano.jpeg',
     alt: 'Área familiar y mesas de patio',
     label: 'Área Familiar',
   },
