@@ -15,7 +15,7 @@ export const galleryImages = [
   },
   {
     id:  2,
-    src: 'vista-general',
+    src: '/vista-general.jpeg',
     alt: 'Área recreativa y patio',
     label: 'Área Recreativa',
   },
