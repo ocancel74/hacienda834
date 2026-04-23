@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hacienda834.com/sitemap.xml
