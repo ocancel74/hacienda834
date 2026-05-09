@@ -68,7 +68,7 @@ export const galleryVideos = [
     id:        1,
     youtubeId: 'P4QnYEizv6g',
     src:       null,
-    thumbnail: 'https://placehold.co/800x450/0ea5e9/ffffff?text=Video+1+-+Tour+General',
+    thumbnail: null,
     title:     'Tour por Hacienda834',
     duration:  '0:38',
 },
