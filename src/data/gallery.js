@@ -73,12 +73,12 @@ export const galleryVideos = [
     duration:  '0:38',
 },
   {
-    id:        2,
-    youtubeId: null,
+     id:        2,
+    youtubeId: 'tLZkV--foRI',
     src:       null,
-    thumbnail: 'https://placehold.co/800x450/0369a1/ffffff?text=Video+2+-+Piscina',
+    thumbnail: null,
     title:     'La piscina y sus alrededores',
-    duration:  '1:45',
+    duration:  '0:23',
   },
   {
     id:        3,
