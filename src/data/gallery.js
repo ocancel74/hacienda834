@@ -9,7 +9,7 @@
 export const galleryImages = [
   {
     id:  1,
-    src: 'https://placehold.co/800x600/0ea5e9/ffffff?text=Piscina+Principal',
+    src: '/piscina1.jpeg',
     alt: 'Vista de la piscina principal',
     label: 'Piscina',
   },
@@ -39,19 +39,19 @@ export const galleryImages = [
   },
   {
     id:  6,
-    src: 'https://placehold.co/800x600/d9892a/ffffff?text=Mesa+de+Billar',
+    src: '/foto-billar2.jpeg',
     alt: 'Mesa de billar',
     label: 'Billar',
   },
   {
     id:  7,
-    src: 'https://placehold.co/800x600/0284c7/ffffff?text=Piscina+Nocturna',
+    src: '/entrada.jpeg',
     alt: 'Piscina en la tarde',
     label: 'Tarde en la piscina',
   },
   {
     id:  8,
-    src: 'https://placehold.co/800x600/38bdf8/ffffff?text=Vista+General',
+    src: '/Area todo.jpeg',
     alt: 'Vista general de Hacienda834',
     label: 'Vista General',
   },
