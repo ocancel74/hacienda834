@@ -81,11 +81,12 @@ export const galleryVideos = [
     duration:  '1:45',
   },
   {
-    id:        3,
-    youtubeId: 'Q3q0M_yiwYo',
-    src:       null,
-    thumbnail: 'https://img.youtube.com/vi/Q3q0M_yiwYo/hqdefault.jpg',
-    title:     'Áreas recreativas y entretenimiento',
-    duration:  '1:01',
+    id:           3,
+    youtubeId:    'Q3q0M_yiwYo',
+    embedDisabled: true,
+    src:          null,
+    thumbnail:    'https://img.youtube.com/vi/Q3q0M_yiwYo/hqdefault.jpg',
+    title:        'Áreas recreativas y entretenimiento',
+    duration:     '1:01',
   },
 ]

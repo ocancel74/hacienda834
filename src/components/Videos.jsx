@@ -81,7 +81,14 @@ function VideoCard({ video, onPlay }) {
 
         {/* Play button */}
         <button
-          onClick={() => video.youtubeId && onPlay(video)}
+          onClick={() => {
+            if (!video.youtubeId) return
+            if (video.embedDisabled) {
+              window.open(`https://www.youtube.com/watch?v=${video.youtubeId}`, '_blank', 'noopener,noreferrer')
+            } else {
+              onPlay(video)
+            }
+          }}
           aria-label={`Reproducir: ${video.title}`}
           className="absolute inset-0 flex items-center justify-center group/btn"
         >
