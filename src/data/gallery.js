@@ -64,19 +64,19 @@ export const galleryImages = [
 //   el ID es "dQw4w9WgXcQ"
 
 export const galleryVideos = [
- {
+  {
     id:        1,
     youtubeId: 'P4QnYEizv6g',
     src:       null,
-    thumbnail: null,
+    thumbnail: 'https://img.youtube.com/vi/P4QnYEizv6g/hqdefault.jpg',
     title:     'Tour por Hacienda834',
     duration:  '0:38',
-},
+  },
   {
     id:        2,
     youtubeId: 'tLZkV--foRI',
     src:       null,
-    thumbnail: null,
+    thumbnail: 'https://img.youtube.com/vi/tLZkV--foRI/hqdefault.jpg',
     title:     'La piscina y sus alrededores',
     duration:  '1:45',
   },
@@ -84,7 +84,7 @@ export const galleryVideos = [
     id:        3,
     youtubeId: 'Q3q0M_yiwYo',
     src:       null,
-     thumbnail: null,
+    thumbnail: 'https://img.youtube.com/vi/Q3q0M_yiwYo/hqdefault.jpg',
     title:     'Áreas recreativas y entretenimiento',
     duration:  '1:01',
   },
