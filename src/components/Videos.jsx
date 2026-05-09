@@ -38,7 +38,7 @@ function VideoModal({ video, onClose }) {
         <div className="rounded-2xl overflow-hidden aspect-video bg-black shadow-2xl">
           <iframe
             className="w-full h-full"
-            src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
+            src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
             title={video.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
