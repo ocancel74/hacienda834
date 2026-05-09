@@ -82,10 +82,10 @@ export const galleryVideos = [
   },
   {
     id:        3,
-    youtubeId: null,
+    youtubeId: 'Q3q0M_yiwYo',
     src:       null,
-    thumbnail: 'https://placehold.co/800x450/075985/ffffff?text=Video+3+-+%C3%81reas+Recreativas',
+     thumbnail: null,
     title:     'Áreas recreativas y entretenimiento',
-    duration:  '2:10',
+    duration:  '1:01',
   },
 ]
