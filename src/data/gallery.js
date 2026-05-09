@@ -78,7 +78,7 @@ export const galleryVideos = [
     src:       null,
     thumbnail: 'https://img.youtube.com/vi/tLZkV--foRI/hqdefault.jpg',
     title:     'La piscina y sus alrededores',
-    duration:  '1:45',
+    duration:  '0:23',
   },
   {
     id:        3,
