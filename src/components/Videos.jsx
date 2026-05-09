@@ -1,28 +1,61 @@
-import { useState } from 'react'
-import { Play, Film } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Play, Film, X } from 'lucide-react'
 import SectionTitle from './SectionTitle'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { galleryVideos } from '../data/gallery'
 
-/* ── Video Card ──────────────────────────────────────────────────────────── */
-function VideoCard({ video }) {
-  const [playing, setPlaying] = useState(false)
+/* ── Video Modal ─────────────────────────────────────────────────────────── */
+function VideoModal({ video, onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => e.key === 'Escape' && onClose()
+    document.addEventListener('keydown', handleKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [onClose])
 
-  // YouTube embed
-  if (video.youtubeId && playing) {
-    return (
-      <div className="rounded-2xl overflow-hidden aspect-video bg-black shadow-xl">
-        <iframe
-          className="w-full h-full"
-          src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
-          title={video.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-4xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          aria-label="Cerrar video"
+          className="absolute -top-10 right-0 text-white/80 hover:text-white transition-colors"
+        >
+          <X className="w-7 h-7" />
+        </button>
+
+        {/* Video */}
+        <div className="rounded-2xl overflow-hidden aspect-video bg-black shadow-2xl">
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+
+        {/* Title */}
+        <p className="mt-3 text-center text-white/80 text-sm font-medium">
+          {video.title}
+        </p>
       </div>
-    )
-  }
+    </div>
+  )
+}
 
+/* ── Video Card ──────────────────────────────────────────────────────────── */
+function VideoCard({ video, onPlay }) {
   return (
     <div className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-pool-500/20 transition-all duration-300 hover:-translate-y-1">
       {/* Thumbnail */}
@@ -48,12 +81,9 @@ function VideoCard({ video }) {
 
         {/* Play button */}
         <button
-          onClick={() => video.youtubeId && setPlaying(true)}
+          onClick={() => video.youtubeId && onPlay(video)}
           aria-label={`Reproducir: ${video.title}`}
-          className="
-            absolute inset-0 flex items-center justify-center
-            group/btn
-          "
+          className="absolute inset-0 flex items-center justify-center group/btn"
         >
           <span className="
             flex items-center justify-center
@@ -88,6 +118,7 @@ function VideoCard({ video }) {
 /* ── Videos Section ──────────────────────────────────────────────────────── */
 export default function Videos() {
   const gridRef = useScrollAnimation(0.05)
+  const [activeVideo, setActiveVideo] = useState(null)
 
   return (
     <section id="videos" className="py-20 lg:py-28 bg-white">
@@ -104,11 +135,15 @@ export default function Videos() {
           className="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {galleryVideos.map(video => (
-            <VideoCard key={video.id} video={video} />
+            <VideoCard key={video.id} video={video} onPlay={setActiveVideo} />
           ))}
         </div>
 
       </div>
+
+      {activeVideo && (
+        <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
+      )}
     </section>
   )
 }
