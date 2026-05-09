@@ -64,14 +64,14 @@ export const galleryImages = [
 //   el ID es "dQw4w9WgXcQ"
 
 export const galleryVideos = [
-  {
+ {
     id:        1,
-    youtubeId: null,   // Reemplaza con el ID de YouTube cuando tengas el video
-    src:       null,   // O usa una ruta local: '/videos/video1.mp4'
+    youtubeId: 'P4QnYEizv6g',
+    src:       null,
     thumbnail: 'https://placehold.co/800x450/0ea5e9/ffffff?text=Video+1+-+Tour+General',
     title:     'Tour por Hacienda834',
-    duration:  '2:30',
-  },
+    duration:  '0:38',
+},
   {
     id:        2,
     youtubeId: null,
