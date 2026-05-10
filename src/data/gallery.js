@@ -80,12 +80,4 @@ export const galleryVideos = [
     title:     'La piscina y sus alrededores',
     duration:  '0:23',
   },
-  {
-    id:        3,
-    youtubeId: 'Q3q0M_yiwYo',
-    src:       null,
-    thumbnail: 'https://img.youtube.com/vi/Q3q0M_yiwYo/hqdefault.jpg',
-    title:     'Áreas recreativas y entretenimiento',
-    duration:  '1:01',
-  },
 ]
