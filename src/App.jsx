@@ -12,8 +12,11 @@ import Contact       from './components/Contact'
 import CTA           from './components/CTA'
 import Footer        from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
+import Admin         from './components/Admin'
 
 export default function App() {
+  if (window.location.pathname === '/admin') return <Admin />
+
   return (
     <div className="font-sans">
       <Navbar />
