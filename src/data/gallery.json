@@ -1,17 +1,84 @@
 {
   "images": [
-    { "id": 1, "src": "/piscina1.jpeg",       "alt": "Vista de la piscina principal",      "label": "Piscina" },
-    { "id": 2, "src": "/vista-general.jpeg",  "alt": "Área recreativa y patio",            "label": "Área Recreativa" },
-    { "id": 3, "src": "/foto-bbq.jpg",        "alt": "Area de BBQ",                        "label": "Terraza" },
-    { "id": 4, "src": "/Cancha.jpeg",         "alt": "Cancha de baloncesto",               "label": "Cancha" },
-    { "id": 5, "src": "/Sombrillas-Bano.jpeg","alt": "Área familiar y mesas de patio",     "label": "Área Familiar" },
-    { "id": 6, "src": "/foto-billar2.jpeg",   "alt": "Mesa de billar",                     "label": "Billar" },
-    { "id": 7, "src": "/entrada.jpeg",        "alt": "Piscina en la tarde",                "label": "Tarde en la piscina" },
-    { "id": 8, "src": "/Area todo.jpeg",      "alt": "Vista general de Hacienda834",       "label": "Vista General" }
+    {
+      "id": 1,
+      "src": "/piscina1.jpeg",
+      "alt": "Vista de la piscina principal",
+      "label": "Piscina"
+    },
+    {
+      "id": 2,
+      "src": "/vista-general.jpeg",
+      "alt": "Área recreativa y patio",
+      "label": "Área Recreativa"
+    },
+    {
+      "id": 3,
+      "src": "/foto-bbq.jpg",
+      "alt": "Area de BBQ",
+      "label": "Terraza"
+    },
+    {
+      "id": 4,
+      "src": "/Cancha.jpeg",
+      "alt": "Cancha de baloncesto",
+      "label": "Cancha"
+    },
+    {
+      "id": 5,
+      "src": "/Sombrillas-Bano.jpeg",
+      "alt": "Área familiar y mesas de patio",
+      "label": "Área Familiar"
+    },
+    {
+      "id": 6,
+      "src": "/foto-billar2.jpeg",
+      "alt": "Mesa de billar",
+      "label": "Billar"
+    },
+    {
+      "id": 7,
+      "src": "/entrada.jpeg",
+      "alt": "Piscina en la tarde",
+      "label": "Tarde en la piscina"
+    },
+    {
+      "id": 8,
+      "src": "/Area todo.jpeg",
+      "alt": "Vista general de Hacienda834",
+      "label": "Vista General"
+    },
+    {
+      "id": 1786737982416,
+      "src": "https://depositphotos.com/es/illustrations/piscina-piscina.html",
+      "alt": "Aerea",
+      "label": "Dibujo"
+    }
   ],
   "videos": [
-    { "id": 1, "youtubeId": "P4QnYEizv6g", "src": null, "thumbnail": "https://img.youtube.com/vi/P4QnYEizv6g/hqdefault.jpg", "title": "Tour por Hacienda834",                  "duration": "0:38" },
-    { "id": 2, "youtubeId": "tLZkV--foRI", "src": null, "thumbnail": "https://img.youtube.com/vi/tLZkV--foRI/hqdefault.jpg", "title": "La piscina y sus alrededores",           "duration": "0:23" },
-    { "id": 3, "youtubeId": "Q3q0M_yiwYo", "src": null, "thumbnail": "https://img.youtube.com/vi/Q3q0M_yiwYo/hqdefault.jpg", "title": "Áreas recreativas y entretenimiento",   "duration": "1:01" }
+    {
+      "id": 1,
+      "youtubeId": "P4QnYEizv6g",
+      "src": null,
+      "thumbnail": "https://img.youtube.com/vi/P4QnYEizv6g/hqdefault.jpg",
+      "title": "Tour por Hacienda834",
+      "duration": "0:38"
+    },
+    {
+      "id": 2,
+      "youtubeId": "tLZkV--foRI",
+      "src": null,
+      "thumbnail": "https://img.youtube.com/vi/tLZkV--foRI/hqdefault.jpg",
+      "title": "La piscina y sus alrededores",
+      "duration": "0:23"
+    },
+    {
+      "id": 3,
+      "youtubeId": "Q3q0M_yiwYo",
+      "src": null,
+      "thumbnail": "https://img.youtube.com/vi/Q3q0M_yiwYo/hqdefault.jpg",
+      "title": "Áreas recreativas y entretenimiento",
+      "duration": "1:01"
+    }
   ]
 }
