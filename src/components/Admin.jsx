@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 function extractYoutubeId(raw) {
   const m = raw.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
@@ -52,17 +52,64 @@ function VideoRow({ video, onChange, onDelete }) {
   )
 }
 
-function PhotoRow({ photo, onChange, onDelete }) {
+function PhotoRow({ photo, onChange, onDelete, password }) {
+  const fileRef = useRef()
+  const [uploading, setUploading] = useState(false)
+  const [uploadErr, setUploadErr] = useState('')
+
+  async function handleFile(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true)
+    setUploadErr('')
+    try {
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result.split(',')[1])
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+      const r = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, filename: file.name, content: base64 }),
+      })
+      const data = await r.json()
+      if (r.ok) {
+        onChange('src', data.src)
+        if (!photo.alt) onChange('alt', file.name.replace(/\.[^.]+$/, ''))
+      } else {
+        setUploadErr(data.error || 'Error subiendo')
+      }
+    } catch {
+      setUploadErr('Error de conexión')
+    }
+    setUploading(false)
+  }
+
   return (
     <div className="flex gap-3 items-start p-3 bg-gray-50 rounded-xl mb-3">
-      <div className="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200">
-        {photo.src && <img src={photo.src} alt="" className="w-full h-full object-cover"
-          onError={e => { e.target.style.display = 'none' }} />}
+      <div
+        className="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors relative"
+        onClick={() => fileRef.current.click()}
+        title="Clic para subir foto"
+      >
+        {photo.src
+          ? <img src={photo.src} alt="" className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none' }} />
+          : <span className="text-2xl">{uploading ? '⏳' : '📷'}</span>
+        }
+        {uploading && (
+          <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
+            <span className="text-xs text-gray-500">Subiendo...</span>
+          </div>
+        )}
+        <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
       </div>
       <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <Field label="URL de la foto">
-          <input className={inp} placeholder="/foto.jpg o https://..." value={photo.src}
+        <Field label="Foto (clic en la imagen para subir)">
+          <input className={inp} placeholder="/foto.jpg" value={photo.src}
             onChange={e => onChange('src', e.target.value)} />
+          {uploadErr && <p className="text-xs text-red-500 mt-1">{uploadErr}</p>}
         </Field>
         <Field label="Descripción">
           <input className={inp} placeholder="Vista de la piscina" value={photo.alt}
@@ -204,11 +251,11 @@ export default function Admin() {
         </Card>
 
         <Card title="&#128444;&#65039; Fotos de la galería">
-          <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-4 text-xs text-blue-700">
-            Para agregar una foto nueva, sube el archivo a la carpeta <code className="bg-blue-100 px-1 rounded">public/</code> en GitHub y escribe el nombre aquí (ej: <code className="bg-blue-100 px-1 rounded">/mi-foto.jpg</code>). También puedes pegar una URL externa.
-          </div>
+          <p className="text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-xl p-3 mb-4">
+            Haz clic en el cuadro gris de cada foto para subir una imagen desde tu dispositivo. Se sube automáticamente al sitio.
+          </p>
           {images.map(img => (
-            <PhotoRow key={img.id} photo={img}
+            <PhotoRow key={img.id} photo={img} password={password}
               onChange={(field, val) => updImage(img.id, field, val)}
               onDelete={() => setImages(images.filter(x => x.id !== img.id))} />
           ))}
