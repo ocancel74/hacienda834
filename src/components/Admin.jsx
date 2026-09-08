@@ -1,12 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
-/* ── helpers ────────────────────────────────────────────────────────────── */
 function extractYoutubeId(raw) {
   const m = raw.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)
   return m ? m[1] : raw.trim()
 }
 
-/* ── sub-components ─────────────────────────────────────────────────────── */
 function Card({ title, children }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
@@ -25,7 +23,7 @@ function Field({ label, children }) {
   )
 }
 
-const inp = 'border border-gray-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500'
+const inp = 'border border-gray-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-green-600'
 
 function VideoRow({ video, onChange, onDelete }) {
   const id = video.youtubeId || ''
@@ -55,6 +53,7 @@ function VideoRow({ video, onChange, onDelete }) {
 }
 
 function PhotoRow({ photo, onChange, onDelete, password }) {
+  const fileRef = useRef()
   const [uploading, setUploading] = useState(false)
   const [uploadErr, setUploadErr] = useState('')
 
@@ -64,44 +63,55 @@ function PhotoRow({ photo, onChange, onDelete, password }) {
     setUploading(true)
     setUploadErr('')
     try {
-      const reader = new FileReader()
-      reader.onload = async ev => {
-        const base64 = ev.target.result.split(',')[1]
-        const r = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password, filename: file.name, content: base64 }),
-        })
-        const data = await r.json()
-        if (r.ok) {
-          onChange('src', data.src)
-        } else {
-          setUploadErr(data.error || 'Error subiendo imagen')
-        }
-        setUploading(false)
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result.split(',')[1])
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+      const r = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, filename: file.name, content: base64 }),
+      })
+      const data = await r.json()
+      if (r.ok) {
+        onChange('src', data.src)
+        if (!photo.alt) onChange('alt', file.name.replace(/\.[^.]+$/, ''))
+      } else {
+        setUploadErr(data.error || 'Error subiendo')
       }
-      reader.readAsDataURL(file)
     } catch {
       setUploadErr('Error de conexión')
-      setUploading(false)
     }
+    setUploading(false)
   }
 
   return (
     <div className="flex gap-3 items-start p-3 bg-gray-50 rounded-xl mb-3">
-      <label className="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200 cursor-pointer relative group">
+      <div
+        className="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors relative"
+        onClick={() => fileRef.current.click()}
+        title="Clic para subir foto"
+      >
         {photo.src
-          ? <img src={photo.src} alt="" className="w-full h-full object-cover" onError={e => { e.target.style.display='none' }} />
-          : <div className="w-full h-full flex items-center justify-center text-2xl text-gray-400">+</div>
+          ? <img src={photo.src} alt="" className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none' }} />
+          : <span className="text-2xl">{uploading ? '⏳' : '📷'}</span>
         }
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium">
-          {uploading ? '...' : 'Cambiar'}
-        </div>
-        <input type="file" accept="image/*" className="hidden" onChange={handleFile} disabled={uploading} />
-      </label>
-      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2">
-        {uploadErr && <p className="sm:col-span-2 text-red-500 text-xs">{uploadErr}</p>}
-        <Field label="Descripción (alt)">
+        {uploading && (
+          <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
+            <span className="text-xs text-gray-500">Subiendo...</span>
+          </div>
+        )}
+        <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
+      </div>
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2">
+        <Field label="Foto (clic en la imagen para subir)">
+          <input className={inp} placeholder="/foto.jpg" value={photo.src}
+            onChange={e => onChange('src', e.target.value)} />
+          {uploadErr && <p className="text-xs text-red-500 mt-1">{uploadErr}</p>}
+        </Field>
+        <Field label="Descripción">
           <input className={inp} placeholder="Vista de la piscina" value={photo.alt}
             onChange={e => onChange('alt', e.target.value)} />
         </Field>
@@ -116,7 +126,6 @@ function PhotoRow({ photo, onChange, onDelete, password }) {
   )
 }
 
-/* ── main component ─────────────────────────────────────────────────────── */
 export default function Admin() {
   const [screen,   setScreen]   = useState('login')
   const [password, setPassword] = useState('')
@@ -176,16 +185,22 @@ export default function Admin() {
     setImages(images.map(img => img.id !== id ? img : { ...img, [field]: value }))
   }
 
-  /* ── login screen ── */
   if (screen === 'login') {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm">
-          <div className="text-center mb-6">
-            <img src="/logo.png" alt="Hacienda834" className="h-24 w-auto object-contain mx-auto mb-2"
-              onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='block' }} />
-            <h1 style={{display:'none'}} className="text-2xl font-bold text-gray-800">Hacienda834</h1>
-            <p className="text-gray-500 text-sm mt-1">Panel de administración</p>
+          <div className="flex flex-col items-center mb-6">
+            <img
+              src="/logo.png"
+              alt="Hacienda834"
+              className="h-28 w-auto rounded-xl mb-2"
+              onError={e => {
+                e.target.style.display = 'none'
+                e.target.nextSibling.style.display = 'block'
+              }}
+            />
+            <span className="hidden text-2xl font-bold text-gray-800" style={{display:'none'}}>Hacienda834</span>
+            <p className="text-gray-500 text-sm mt-2">Panel de administración</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
@@ -195,7 +210,7 @@ export default function Admin() {
             </div>
             {error && <p className="text-red-500 text-sm bg-red-50 rounded-lg px-3 py-2">{error}</p>}
             <button type="submit" disabled={loading}
-              className="w-full bg-pool-500 hover:bg-pool-600 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl transition-colors">
+              className="w-full bg-green-700 hover:bg-green-800 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl transition-colors">
               {loading ? 'Cargando...' : 'Entrar'}
             </button>
           </form>
@@ -204,31 +219,32 @@ export default function Admin() {
     )
   }
 
-  /* ── admin panel ── */
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 px-6 py-3 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex flex-wrap gap-3 items-center justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="Hacienda834" className="h-8 w-auto object-contain"
-                onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='inline' }} />
-              <h1 style={{display:'none'}} className="text-lg font-bold text-gray-800">Hacienda834</h1>
-              <span className="text-sm text-gray-500 font-medium">— Admin</span>
-            </div>
-            <p className="text-xs text-gray-400">Los cambios aparecen en el sitio en ~2 minutos</p>
-          </div>
+          <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="Hacienda834"
+              className="h-12 w-auto rounded-lg"
+              onError={e => {
+                e.target.style.display = 'none'
+                e.target.nextSibling.style.display = 'block'
+              }}
+            />
+            <span className="hidden font-bold text-gray-800" style={{display:'none'}}>Hacienda834</span>
+            <span className="text-xs text-gray-400 hidden sm:block">Ver sitio &#8599;</span>
+          </a>
           <div className="flex items-center gap-3 flex-wrap">
             {msg && (
               <span className={`text-sm px-3 py-1.5 rounded-full ${msg.ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
                 {msg.text}
               </span>
             )}
-            <a href="/" target="_blank" rel="noopener noreferrer"
-              className="text-sm text-gray-500 hover:text-gray-700 underline">Ver sitio ↗</a>
+            <p className="text-xs text-gray-400 hidden sm:block">Cambios en ~2 minutos</p>
             <button onClick={handleSave} disabled={saving}
-              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold px-5 py-2 rounded-xl transition-colors">
+              className="bg-green-700 hover:bg-green-800 disabled:opacity-50 text-white text-sm font-semibold px-5 py-2 rounded-xl transition-colors">
               {saving ? 'Guardando...' : 'Guardar cambios'}
             </button>
           </div>
@@ -236,40 +252,36 @@ export default function Admin() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-
-        {/* Videos */}
-        <Card title="🎬 Videos de YouTube">
+        <Card title="&#127916; Videos de YouTube">
           {videos.map(v => (
             <VideoRow key={v.id} video={v}
               onChange={(field, val) => updVideo(v.id, field, val)}
               onDelete={() => setVideos(videos.filter(x => x.id !== v.id))} />
           ))}
-          {videos.length === 0 && <p className="text-sm text-gray-400 mb-3">No hay videos. Agrega uno abajo.</p>}
+          {videos.length === 0 && <p className="text-sm text-gray-400 mb-3">No hay videos.</p>}
           <button
             onClick={() => setVideos([...videos, { id: Date.now(), youtubeId: '', src: null, thumbnail: '', title: '', duration: '' }])}
-            className="w-full border-2 border-dashed border-gray-300 hover:border-blue-400 text-gray-400 hover:text-blue-500 rounded-xl py-2.5 text-sm transition-colors">
+            className="w-full border-2 border-dashed border-gray-300 hover:border-green-500 text-gray-400 hover:text-green-600 rounded-xl py-2.5 text-sm transition-colors">
             + Agregar video
           </button>
         </Card>
 
-        {/* Fotos */}
-        <Card title="🖼️ Fotos de la galería">
-          <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-4 text-xs text-blue-700">
-            Haz clic en la miniatura de cada foto para cambiarla. Puedes subir la imagen directamente desde tu dispositivo.
-          </div>
+        <Card title="&#128444;&#65039; Fotos de la galería">
+          <p className="text-xs text-green-800 bg-green-50 border border-green-100 rounded-xl p-3 mb-4">
+            Haz clic en el cuadro de cada foto para subir una imagen desde tu dispositivo.
+          </p>
           {images.map(img => (
             <PhotoRow key={img.id} photo={img} password={password}
               onChange={(field, val) => updImage(img.id, field, val)}
               onDelete={() => setImages(images.filter(x => x.id !== img.id))} />
           ))}
-          {images.length === 0 && <p className="text-sm text-gray-400 mb-3">No hay fotos. Agrega una abajo.</p>}
+          {images.length === 0 && <p className="text-sm text-gray-400 mb-3">No hay fotos.</p>}
           <button
             onClick={() => setImages([...images, { id: Date.now(), src: '', alt: '', label: '' }])}
-            className="w-full border-2 border-dashed border-gray-300 hover:border-blue-400 text-gray-400 hover:text-blue-500 rounded-xl py-2.5 text-sm transition-colors">
+            className="w-full border-2 border-dashed border-gray-300 hover:border-green-500 text-gray-400 hover:text-green-600 rounded-xl py-2.5 text-sm transition-colors">
             + Agregar foto
           </button>
         </Card>
-
       </main>
     </div>
   )

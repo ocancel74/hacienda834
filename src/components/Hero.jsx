@@ -12,16 +12,14 @@ export default function Hero() {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* ── Background image + overlay ──────────────────────────────────────── */}
-      {/* Para cambiar la imagen: reemplaza /hero.jpg en public/ por tu foto   */}
+      {/* ── Background image + overlay ──────────────────────────────────── */}
       <div
         className="absolute inset-0 bg-cover bg-top bg-no-repeat"
         style={{ backgroundImage: "url('/hero.jpg')" }}
       />
-      {/* Overlay oscuro para que el texto sea legible */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pool-900/80 via-pool-800/70 to-pool-600/60" />
+      <div className="absolute inset-0 bg-gradient-to-br from-pool-900/85 via-pool-800/75 to-pool-700/65" />
 
-      {/* ── Wave bottom ─────────────────────────────────────────────────────── */}
+      {/* ── Wave bottom ────────────────────────────────────────────── */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
           <path
@@ -31,10 +29,10 @@ export default function Hero() {
         </svg>
       </div>
 
-      {/* ── Main content ────────────────────────────────────────────────────── */}
+      {/* ── Main content ────────────────────────────────────────────── */}
       <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto pt-24 pb-32">
 
-        {/* Badge — abre el calendario al hacer clic */}
+        {/* Badge */}
         <button
           onClick={() => setShowCalendar(true)}
           className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/40 text-white/90 text-xs sm:text-sm font-medium px-4 py-2 rounded-full mb-8 animate-fade-in transition-all cursor-pointer"
@@ -46,30 +44,30 @@ export default function Hero() {
           Reservaciones Disponibles
         </button>
 
-        {/* Modal calendario */}
         {showCalendar && <CalendarModal onClose={() => setShowCalendar(false)} />}
 
-        {/* Logo / Headline */}
-        <div className="flex justify-center mb-4 animate-fade-in-up">
+        {/* Logo completo */}
+        <div className="flex justify-center mb-6 animate-fade-in-up">
           <img
             src="/logo.png"
             alt="Hacienda834"
-            className="max-w-xs sm:max-w-sm lg:max-w-md w-full object-contain drop-shadow-2xl"
+            className="w-full max-w-xs sm:max-w-sm lg:max-w-md rounded-2xl shadow-2xl"
             onError={e => {
               e.target.style.display = 'none'
               e.target.nextSibling.style.display = 'block'
             }}
           />
+          {/* Fallback texto si no hay logo.png */}
           <h1
-            style={{ display: 'none' }}
-            className="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-none"
+            className="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-none hidden"
+            style={{display:'none'}}
           >
             Hacienda<span className="text-sand-300">834</span>
           </h1>
         </div>
 
         {/* Subheadline */}
-        <p className="text-xl sm:text-2xl text-pool-100 font-light mb-5 animate-fade-in-up">
+        <p className="text-xl sm:text-2xl text-white/90 font-light mb-5 animate-fade-in-up">
           Tu espacio privado con piscina para celebrar y crear recuerdos
         </p>
 
@@ -144,7 +142,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── Scroll indicator ────────────────────────────────────────────────── */}
+      {/* ── Scroll indicator ────────────────────────────────────────────── */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 animate-bounce">
         <ChevronDown className="w-8 h-8 text-white/40" />
       </div>

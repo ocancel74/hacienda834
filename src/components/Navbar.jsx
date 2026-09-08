@@ -11,6 +11,33 @@ const NAV_LINKS = [
   { label: 'Contacto',  href: '#contacto'  },
 ]
 
+function Logo({ scrolled }) {
+  return (
+    <a href="#inicio" className="flex items-center shrink-0" aria-label="Hacienda834 — inicio">
+      {/* Logo image — sube /logo.png a la carpeta public para activarlo */}
+      <img
+        src="/logo.png"
+        alt="Hacienda834"
+        className="h-12 lg:h-14 w-auto"
+        onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }}
+      />
+      {/* Fallback texto si no hay logo.png */}
+      <span className="items-center gap-1 hidden" style={{display:'none'}}>
+        <span className={`font-serif text-xl lg:text-2xl font-bold tracking-tight transition-colors ${
+          scrolled ? 'text-pool-800' : 'text-white'
+        }`}>
+          Hacienda
+        </span>
+        <span className={`font-serif text-xl lg:text-2xl font-black transition-colors ${
+          scrolled ? 'text-sand-300' : 'text-sand-200'
+        }`}>
+          834
+        </span>
+      </span>
+    </a>
+  )
+}
+
 export default function Navbar() {
   const [isOpen,   setIsOpen]   = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -36,30 +63,7 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
 
-          {/* Logo */}
-          <a
-            href="#inicio"
-            className="flex items-center shrink-0"
-            aria-label="Hacienda834 — inicio"
-          >
-            <img
-              src="/logo.png"
-              alt="Hacienda834"
-              className="h-10 lg:h-12 w-auto object-contain"
-              onError={e => {
-                e.target.style.display = 'none'
-                e.target.nextSibling.style.display = 'block'
-              }}
-            />
-            <span
-              style={{ display: 'none' }}
-              className={`font-serif text-xl font-bold tracking-tight transition-colors ${
-                scrolled ? 'text-slate-900' : 'text-white'
-              }`}
-            >
-              Hacienda<span className={scrolled ? 'text-pool-500' : 'text-sand-300'}>834</span>
-            </span>
-          </a>
+          <Logo scrolled={scrolled} />
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-1">
@@ -71,7 +75,7 @@ export default function Navbar() {
                   px-3 py-2 text-sm font-medium rounded-lg
                   transition-colors
                   ${scrolled
-                    ? 'text-slate-600 hover:text-pool-600 hover:bg-pool-50'
+                    ? 'text-pool-800 hover:text-pool-600 hover:bg-pool-50'
                     : 'text-white/85 hover:text-white hover:bg-white/10'}
                 `}
               >
@@ -87,12 +91,13 @@ export default function Navbar() {
             rel="noopener noreferrer"
             className="
               hidden md:inline-flex items-center gap-2
-              bg-pool-500 hover:bg-pool-600
+              bg-pool-600 hover:bg-pool-700
               text-white text-sm font-semibold
               px-5 py-2.5 rounded-full
               transition-all
-              hover:shadow-lg hover:shadow-pool-500/30
+              hover:shadow-lg hover:shadow-pool-600/30
               hover:-translate-y-0.5
+              border border-sand-300/30
             "
           >
             Reservar
@@ -105,7 +110,7 @@ export default function Navbar() {
             className={`
               md:hidden p-2 rounded-lg transition-colors
               ${scrolled
-                ? 'text-slate-700 hover:bg-slate-100'
+                ? 'text-pool-800 hover:bg-pool-50'
                 : 'text-white hover:bg-white/10'}
             `}
           >
@@ -120,7 +125,7 @@ export default function Navbar() {
             ${isOpen ? 'max-h-screen pb-4' : 'max-h-0'}
           `}
         >
-          <div className="bg-white rounded-2xl shadow-2xl mt-1 overflow-hidden">
+          <div className="bg-cream-100 rounded-2xl shadow-2xl mt-1 overflow-hidden border border-sand-200">
             {NAV_LINKS.map(link => (
               <a
                 key={link.href}
@@ -128,15 +133,15 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="
                   flex items-center px-6 py-3.5
-                  text-slate-700 font-medium text-sm
+                  text-pool-800 font-medium text-sm
                   hover:bg-pool-50 hover:text-pool-600
-                  transition-colors border-b border-slate-50 last:border-0
+                  transition-colors border-b border-sand-100 last:border-0
                 "
               >
                 {link.label}
               </a>
             ))}
-            <div className="px-6 py-4 bg-slate-50">
+            <div className="px-6 py-4 bg-cream-200">
               <a
                 href={reserveUrl}
                 target="_blank"
@@ -144,7 +149,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="
                   block w-full text-center
-                  bg-pool-500 hover:bg-pool-600
+                  bg-pool-600 hover:bg-pool-700
                   text-white font-semibold text-sm
                   py-3 rounded-full
                   transition-colors

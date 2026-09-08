@@ -1,62 +1,61 @@
+const OWNER = 'ocancel74'
+const REPO  = 'hacienda834'
+
+function ghHeaders(token) {
+  return {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'User-Agent': 'hacienda834-admin',
+    'Content-Type': 'application/json',
+  }
+}
+
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' })
-  }
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
-  const { password, filename, content } = req.body || {}
+  if (req.method === 'OPTIONS') return res.status(200).end()
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido' })
 
-  if (!password || password !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({ error: 'Unauthorized' })
-  }
+  const TOKEN = process.env.GITHUB_TOKEN
+  const PASS  = process.env.ADMIN_PASSWORD
 
-  if (!filename || !content) {
-    return res.status(400).json({ error: 'Missing filename or content' })
-  }
+  const { password, filename, content } = req.body
+  if (password !== PASS) return res.status(401).json({ error: 'No autorizado' })
+  if (!filename || !content) return res.status(400).json({ error: 'Faltan datos' })
 
-  const repo  = process.env.GITHUB_REPO  || 'ocancel74/hacienda834'
-  const token = process.env.GITHUB_TOKEN
-  const path  = `public/${filename}`
+  // Sanitize filename: only allow safe characters
+  const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '-')
+  const path = `public/${safeName}`
+  const url  = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`
 
-  if (!token) {
-    return res.status(500).json({ error: 'GITHUB_TOKEN not configured' })
-  }
-
-  // Check if file exists to get its SHA (needed for updates)
-  let sha
   try {
-    const check = await fetch(
-      `https://api.github.com/repos/${repo}/contents/${path}`,
-      { headers: { Authorization: `Bearer ${token}`, 'User-Agent': 'hacienda834-admin' } }
-    )
+    // Check if file already exists (to get SHA for update)
+    let sha
+    const check = await fetch(url, { headers: ghHeaders(TOKEN) })
     if (check.ok) {
-      const data = await check.json()
-      sha = data.sha
+      const existing = await check.json()
+      sha = existing.sha
     }
-  } catch { /* new file */ }
 
-  const body = {
-    message: `Subir imagen: ${filename}`,
-    content,
-    ...(sha ? { sha } : {}),
-  }
+    const body = { message: `Subir imagen: ${safeName}`, content }
+    if (sha) body.sha = sha
 
-  const put = await fetch(
-    `https://api.github.com/repos/${repo}/contents/${path}`,
-    {
+    const putR = await fetch(url, {
       method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'User-Agent': 'hacienda834-admin',
-      },
+      headers: ghHeaders(TOKEN),
       body: JSON.stringify(body),
+    })
+
+    if (!putR.ok) {
+      const err = await putR.json()
+      return res.status(500).json({ error: err.message || 'Error subiendo imagen' })
     }
-  )
 
-  if (!put.ok) {
-    const err = await put.text()
-    return res.status(500).json({ error: `GitHub error: ${err}` })
+    return res.status(200).json({ src: `/${safeName}` })
+  } catch {
+    return res.status(500).json({ error: 'Error subiendo imagen' })
   }
-
-  return res.status(200).json({ src: `/${filename}` })
 }
