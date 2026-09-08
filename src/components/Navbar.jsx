@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Menu, X, Waves } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { contact } from '../data/contact'
 
 const NAV_LINKS = [
@@ -29,7 +29,7 @@ export default function Navbar() {
         fixed top-0 left-0 right-0 z-40
         transition-all duration-300
         ${scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md'
+          ? 'bg-cream-100/95 backdrop-blur-md shadow-md border-b border-sand-200'
           : 'bg-transparent'}
       `}
     >
@@ -39,23 +39,25 @@ export default function Navbar() {
           {/* Logo */}
           <a
             href="#inicio"
-            className="flex items-center gap-2 shrink-0"
+            className="flex items-center shrink-0"
             aria-label="Hacienda834 — inicio"
           >
-            <Waves
-              className={`w-6 h-6 transition-colors ${
-                scrolled ? 'text-pool-500' : 'text-white'
-              }`}
+            <img
+              src="/logo.png"
+              alt="Hacienda834"
+              className="h-10 lg:h-12 w-auto object-contain"
+              onError={e => {
+                e.target.style.display = 'none'
+                e.target.nextSibling.style.display = 'block'
+              }}
             />
             <span
+              style={{ display: 'none' }}
               className={`font-serif text-xl font-bold tracking-tight transition-colors ${
                 scrolled ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Hacienda
-              <span className={scrolled ? 'text-pool-500' : 'text-sand-300'}>
-                834
-              </span>
+              Hacienda<span className={scrolled ? 'text-pool-500' : 'text-sand-300'}>834</span>
             </span>
           </a>
 
