@@ -23,7 +23,7 @@ function Field({ label, children }) {
   )
 }
 
-const inp = 'border border-gray-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500'
+const inp = 'border border-gray-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-green-600'
 
 function VideoRow({ video, onChange, onDelete }) {
   const id = video.youtubeId || ''
@@ -189,10 +189,18 @@ export default function Admin() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm">
-          <div className="text-center mb-6">
-            <div className="text-4xl mb-3">&#127968;</div>
-            <h1 className="text-2xl font-bold text-gray-800">Hacienda834</h1>
-            <p className="text-gray-500 text-sm mt-1">Panel de administración</p>
+          <div className="flex flex-col items-center mb-6">
+            <img
+              src="/logo.png"
+              alt="Hacienda834"
+              className="h-28 w-auto rounded-xl mb-2"
+              onError={e => {
+                e.target.style.display = 'none'
+                e.target.nextSibling.style.display = 'block'
+              }}
+            />
+            <span className="hidden text-2xl font-bold text-gray-800" style={{display:'none'}}>Hacienda834</span>
+            <p className="text-gray-500 text-sm mt-2">Panel de administración</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
@@ -202,7 +210,7 @@ export default function Admin() {
             </div>
             {error && <p className="text-red-500 text-sm bg-red-50 rounded-lg px-3 py-2">{error}</p>}
             <button type="submit" disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl transition-colors">
+              className="w-full bg-green-700 hover:bg-green-800 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl transition-colors">
               {loading ? 'Cargando...' : 'Entrar'}
             </button>
           </form>
@@ -213,22 +221,30 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-10">
+      <header className="bg-white border-b border-gray-200 px-6 py-3 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex flex-wrap gap-3 items-center justify-between">
-          <div>
-            <h1 className="text-lg font-bold text-gray-800">&#127968; Hacienda834 — Admin</h1>
-            <p className="text-xs text-gray-400">Los cambios aparecen en el sitio en ~2 minutos</p>
-          </div>
+          <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="Hacienda834"
+              className="h-12 w-auto rounded-lg"
+              onError={e => {
+                e.target.style.display = 'none'
+                e.target.nextSibling.style.display = 'block'
+              }}
+            />
+            <span className="hidden font-bold text-gray-800" style={{display:'none'}}>Hacienda834</span>
+            <span className="text-xs text-gray-400 hidden sm:block">Ver sitio &#8599;</span>
+          </a>
           <div className="flex items-center gap-3 flex-wrap">
             {msg && (
               <span className={`text-sm px-3 py-1.5 rounded-full ${msg.ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
                 {msg.text}
               </span>
             )}
-            <a href="/" target="_blank" rel="noopener noreferrer"
-              className="text-sm text-gray-500 hover:text-gray-700 underline">Ver sitio &#8599;</a>
+            <p className="text-xs text-gray-400 hidden sm:block">Cambios en ~2 minutos</p>
             <button onClick={handleSave} disabled={saving}
-              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold px-5 py-2 rounded-xl transition-colors">
+              className="bg-green-700 hover:bg-green-800 disabled:opacity-50 text-white text-sm font-semibold px-5 py-2 rounded-xl transition-colors">
               {saving ? 'Guardando...' : 'Guardar cambios'}
             </button>
           </div>
@@ -245,14 +261,14 @@ export default function Admin() {
           {videos.length === 0 && <p className="text-sm text-gray-400 mb-3">No hay videos.</p>}
           <button
             onClick={() => setVideos([...videos, { id: Date.now(), youtubeId: '', src: null, thumbnail: '', title: '', duration: '' }])}
-            className="w-full border-2 border-dashed border-gray-300 hover:border-blue-400 text-gray-400 hover:text-blue-500 rounded-xl py-2.5 text-sm transition-colors">
+            className="w-full border-2 border-dashed border-gray-300 hover:border-green-500 text-gray-400 hover:text-green-600 rounded-xl py-2.5 text-sm transition-colors">
             + Agregar video
           </button>
         </Card>
 
         <Card title="&#128444;&#65039; Fotos de la galería">
-          <p className="text-xs text-blue-700 bg-blue-50 border border-blue-100 rounded-xl p-3 mb-4">
-            Haz clic en el cuadro gris de cada foto para subir una imagen desde tu dispositivo. Se sube automáticamente al sitio.
+          <p className="text-xs text-green-800 bg-green-50 border border-green-100 rounded-xl p-3 mb-4">
+            Haz clic en el cuadro de cada foto para subir una imagen desde tu dispositivo.
           </p>
           {images.map(img => (
             <PhotoRow key={img.id} photo={img} password={password}
@@ -262,7 +278,7 @@ export default function Admin() {
           {images.length === 0 && <p className="text-sm text-gray-400 mb-3">No hay fotos.</p>}
           <button
             onClick={() => setImages([...images, { id: Date.now(), src: '', alt: '', label: '' }])}
-            className="w-full border-2 border-dashed border-gray-300 hover:border-blue-400 text-gray-400 hover:text-blue-500 rounded-xl py-2.5 text-sm transition-colors">
+            className="w-full border-2 border-dashed border-gray-300 hover:border-green-500 text-gray-400 hover:text-green-600 rounded-xl py-2.5 text-sm transition-colors">
             + Agregar foto
           </button>
         </Card>
