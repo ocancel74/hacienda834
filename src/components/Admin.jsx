@@ -54,18 +54,53 @@ function VideoRow({ video, onChange, onDelete }) {
   )
 }
 
-function PhotoRow({ photo, onChange, onDelete }) {
+function PhotoRow({ photo, onChange, onDelete, password }) {
+  const [uploading, setUploading] = useState(false)
+  const [uploadErr, setUploadErr] = useState('')
+
+  async function handleFile(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true)
+    setUploadErr('')
+    try {
+      const reader = new FileReader()
+      reader.onload = async ev => {
+        const base64 = ev.target.result.split(',')[1]
+        const r = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, filename: file.name, content: base64 }),
+        })
+        const data = await r.json()
+        if (r.ok) {
+          onChange('src', data.src)
+        } else {
+          setUploadErr(data.error || 'Error subiendo imagen')
+        }
+        setUploading(false)
+      }
+      reader.readAsDataURL(file)
+    } catch {
+      setUploadErr('Error de conexión')
+      setUploading(false)
+    }
+  }
+
   return (
     <div className="flex gap-3 items-start p-3 bg-gray-50 rounded-xl mb-3">
-      <div className="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200">
-        {photo.src && <img src={photo.src} alt="" className="w-full h-full object-cover"
-          onError={e => { e.target.style.display = 'none' }} />}
-      </div>
-      <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2">
-        <Field label="URL de la foto">
-          <input className={inp} placeholder="/foto.jpg o https://..." value={photo.src}
-            onChange={e => onChange('src', e.target.value)} />
-        </Field>
+      <label className="w-20 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200 cursor-pointer relative group">
+        {photo.src
+          ? <img src={photo.src} alt="" className="w-full h-full object-cover" onError={e => { e.target.style.display='none' }} />
+          : <div className="w-full h-full flex items-center justify-center text-2xl text-gray-400">+</div>
+        }
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium">
+          {uploading ? '...' : 'Cambiar'}
+        </div>
+        <input type="file" accept="image/*" className="hidden" onChange={handleFile} disabled={uploading} />
+      </label>
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {uploadErr && <p className="sm:col-span-2 text-red-500 text-xs">{uploadErr}</p>}
         <Field label="Descripción (alt)">
           <input className={inp} placeholder="Vista de la piscina" value={photo.alt}
             onChange={e => onChange('alt', e.target.value)} />
@@ -147,8 +182,9 @@ export default function Admin() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm">
           <div className="text-center mb-6">
-            <div className="text-4xl mb-3">🏡</div>
-            <h1 className="text-2xl font-bold text-gray-800">Hacienda834</h1>
+            <img src="/logo.png" alt="Hacienda834" className="h-24 w-auto object-contain mx-auto mb-2"
+              onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='block' }} />
+            <h1 style={{display:'none'}} className="text-2xl font-bold text-gray-800">Hacienda834</h1>
             <p className="text-gray-500 text-sm mt-1">Panel de administración</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -159,7 +195,7 @@ export default function Admin() {
             </div>
             {error && <p className="text-red-500 text-sm bg-red-50 rounded-lg px-3 py-2">{error}</p>}
             <button type="submit" disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl transition-colors">
+              className="w-full bg-pool-500 hover:bg-pool-600 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl transition-colors">
               {loading ? 'Cargando...' : 'Entrar'}
             </button>
           </form>
@@ -175,7 +211,12 @@ export default function Admin() {
       <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex flex-wrap gap-3 items-center justify-between">
           <div>
-            <h1 className="text-lg font-bold text-gray-800">🏡 Hacienda834 — Admin</h1>
+            <div className="flex items-center gap-2">
+              <img src="/logo.png" alt="Hacienda834" className="h-8 w-auto object-contain"
+                onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='inline' }} />
+              <h1 style={{display:'none'}} className="text-lg font-bold text-gray-800">Hacienda834</h1>
+              <span className="text-sm text-gray-500 font-medium">— Admin</span>
+            </div>
             <p className="text-xs text-gray-400">Los cambios aparecen en el sitio en ~2 minutos</p>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
@@ -214,10 +255,10 @@ export default function Admin() {
         {/* Fotos */}
         <Card title="🖼️ Fotos de la galería">
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 mb-4 text-xs text-blue-700">
-            Para agregar una foto nueva, sube el archivo de imagen a la carpeta <code className="bg-blue-100 px-1 rounded">public/</code> en GitHub y luego escribe el nombre aquí (ej: <code className="bg-blue-100 px-1 rounded">/mi-foto.jpg</code>). También puedes pegar una URL externa (https://...).
+            Haz clic en la miniatura de cada foto para cambiarla. Puedes subir la imagen directamente desde tu dispositivo.
           </div>
           {images.map(img => (
-            <PhotoRow key={img.id} photo={img}
+            <PhotoRow key={img.id} photo={img} password={password}
               onChange={(field, val) => updImage(img.id, field, val)}
               onDelete={() => setImages(images.filter(x => x.id !== img.id))} />
           ))}

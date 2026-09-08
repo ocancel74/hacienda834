@@ -1,4 +1,4 @@
-import { Waves, Phone, Mail, MessageCircle, Heart } from 'lucide-react'
+import { Phone, Mail, MessageCircle, Heart } from 'lucide-react'
 import { contact } from '../data/contact'
 
 const LINKS = [
@@ -26,10 +26,21 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-1">
-            <a href="#inicio" className="flex items-center gap-2 mb-4">
-              <Waves className="w-6 h-6 text-pool-400" />
-              <span className="font-serif text-xl font-bold text-white">
-                Hacienda<span className="text-pool-400">834</span>
+            <a href="#inicio" className="inline-block mb-4">
+              <img
+                src="/logo.png"
+                alt="Hacienda834"
+                className="h-20 w-auto object-contain"
+                onError={e => {
+                  e.target.style.display = 'none'
+                  e.target.nextSibling.style.display = 'inline'
+                }}
+              />
+              <span
+                style={{ display: 'none' }}
+                className="font-serif text-xl font-bold text-white"
+              >
+                Hacienda<span className="text-sand-300">834</span>
               </span>
             </a>
             <p className="text-sm leading-relaxed mb-6">
@@ -41,7 +52,7 @@ export default function Footer() {
               <a
                 href={contact.phoneLink}
                 aria-label="Llamar"
-                className="w-9 h-9 rounded-full bg-slate-800 hover:bg-pool-600 flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-full bg-slate-800 hover:bg-pool-500 flex items-center justify-center transition-colors"
               >
                 <Phone className="w-4 h-4" />
               </a>
@@ -74,7 +85,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm hover:text-pool-400 transition-colors"
+                    className="text-sm hover:text-sand-300 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -92,7 +103,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm hover:text-pool-400 transition-colors"
+                    className="text-sm hover:text-sand-300 transition-colors"
                   >
                     {link.label}
                   </a>
@@ -108,17 +119,17 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm">
-                <Phone className="w-4 h-4 mt-0.5 text-pool-400 shrink-0" />
-                <a href={contact.phoneLink} className="hover:text-pool-400 transition-colors">
+                <Phone className="w-4 h-4 mt-0.5 text-sand-300 shrink-0" />
+                <a href={contact.phoneLink} className="hover:text-sand-300 transition-colors">
                   {contact.phone}
                 </a>
               </li>
               {contact.emails.map(email => (
                 <li key={email.address} className="flex items-start gap-3 text-sm">
-                  <Mail className="w-4 h-4 mt-0.5 text-pool-400 shrink-0" />
+                  <Mail className="w-4 h-4 mt-0.5 text-sand-300 shrink-0" />
                   <a
                     href={`mailto:${email.address}`}
-                    className="hover:text-pool-400 transition-colors break-all"
+                    className="hover:text-sand-300 transition-colors break-all"
                   >
                     {email.address}
                   </a>

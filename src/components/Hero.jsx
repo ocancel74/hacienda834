@@ -25,7 +25,7 @@ export default function Hero() {
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
           <path
-            fill="white"
+            fill="#f8f4ed"
             d="M0,40 C240,90 480,10 720,50 C960,90 1200,20 1440,60 L1440,100 L0,100 Z"
           />
         </svg>
@@ -49,10 +49,24 @@ export default function Hero() {
         {/* Modal calendario */}
         {showCalendar && <CalendarModal onClose={() => setShowCalendar(false)} />}
 
-        {/* Headline */}
-        <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-white mb-4 leading-none animate-fade-in-up">
-          Hacienda<span className="text-sand-300">834</span>
-        </h1>
+        {/* Logo / Headline */}
+        <div className="flex justify-center mb-4 animate-fade-in-up">
+          <img
+            src="/logo.png"
+            alt="Hacienda834"
+            className="max-w-xs sm:max-w-sm lg:max-w-md w-full object-contain drop-shadow-2xl"
+            onError={e => {
+              e.target.style.display = 'none'
+              e.target.nextSibling.style.display = 'block'
+            }}
+          />
+          <h1
+            style={{ display: 'none' }}
+            className="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-none"
+          >
+            Hacienda<span className="text-sand-300">834</span>
+          </h1>
+        </div>
 
         {/* Subheadline */}
         <p className="text-xl sm:text-2xl text-pool-100 font-light mb-5 animate-fade-in-up">
