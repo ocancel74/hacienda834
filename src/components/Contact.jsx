@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { contact } from '../data/contact'
+import CalendarModal from './CalendarModal'
 
 const TIPOS = ['Cumpleaños', 'Graduación', 'Reunión familiar', 'Pasadía / Pool party', 'Baby shower', 'Otro']
 
@@ -15,6 +16,7 @@ export default function Contact() {
   const refR = useScrollAnimation()
   const [form, setForm] = useState({ nombre: '', telefono: '', fecha: '', tipo: '', invitados: '', mensaje: '' })
   const [err, setErr] = useState('')
+  const [showCal, setShowCal] = useState(false)
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
 
@@ -47,6 +49,7 @@ export default function Contact() {
   const inp = 'block w-full bg-cream-100 border border-cream-200 rounded-2xl px-4 py-3.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-pool-500 focus:ring-2 focus:ring-pool-500/20 transition-all duration-200 font-sans'
 
   return (
+    <>
     <section id="reservar" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto items-start">
@@ -102,7 +105,35 @@ export default function Contact() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5" htmlFor="f-fecha">Fecha del Evento</label>
-                <input id="f-fecha" type="date" className={inp} required min={tomorrow} value={form.fecha} onChange={e => set('fecha', e.target.value)} style={{ colorScheme: 'light' }} />
+                <div className="relative">
+                  <input
+                    id="f-fecha"
+                    type="date"
+                    className={inp}
+                    required
+                    min={tomorrow}
+                    value={form.fecha}
+                    onChange={e => set('fecha', e.target.value)}
+                    style={{ colorScheme: 'light', paddingRight: '2.75rem' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowCal(true)}
+                    title="Ver disponibilidad"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-pool-500 hover:text-pool-700 transition-colors"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCal(true)}
+                  className="mt-1.5 text-xs text-pool-500 hover:text-pool-700 font-semibold underline underline-offset-2 transition-colors"
+                >
+                  Ver fechas disponibles →
+                </button>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -144,5 +175,8 @@ export default function Contact() {
         </div>
       </div>
     </section>
+
+    {showCal && <CalendarModal onClose={() => setShowCal(false)} />}
+  </>
   )
 }
