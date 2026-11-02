@@ -25,9 +25,9 @@ export default function App() {
         <Amenities />
         <Gallery />
         <Videos />
-        <Extras />
         <Rules />
         <Pricing />
+        <Extras />
         <Contact />
         <FAQ />
       </main>
