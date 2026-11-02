@@ -33,7 +33,7 @@ export default function Amenities() {
             style={{ gridColumn: '1 / 3', gridRow: '1 / 3' }}
           >
             <img
-              src="/piscina1.jpeg"
+              src="/Piscina.jpeg"
               alt="Piscina privada Hacienda834"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
@@ -53,7 +53,7 @@ export default function Amenities() {
           {/* Billar */}
           <div className="relative rounded-3xl overflow-hidden group">
             <img
-              src="/foto-billar2.jpeg"
+              src="/billar.jpeg"
               alt="Mesa de billar"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
@@ -69,7 +69,7 @@ export default function Amenities() {
           {/* Cancha */}
           <div className="relative rounded-3xl overflow-hidden group">
             <img
-              src="/Cancha.jpeg"
+              src="/cancha 1.jpeg"
               alt="Cancha de baloncesto"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
@@ -101,7 +101,7 @@ export default function Amenities() {
           {/* Espacio Techado */}
           <div className="relative rounded-3xl overflow-hidden group">
             <img
-              src="/area interior.jpeg"
+              src="/area mesas.jpeg"
               alt="Espacio techado"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
