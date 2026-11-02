@@ -234,7 +234,7 @@ className="text-lg sm:text-xl"
 ## Anti-patrones — nunca hacer esto
 
 | ❌ Evitar | ✅ Usar en cambio |
-|-----------|------------------|
+|-----------|-----------------|
 | `grid-cols-3` uniforme con 3 cards idénticas | Bento grid con tamaños variados |
 | `bg-gray-50` o `bg-slate-100` como fondo | `bg-cream-100` / `bg-white` |
 | `rounded-lg` en cards | `rounded-2xl` o `rounded-3xl` |

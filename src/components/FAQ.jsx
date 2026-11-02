@@ -1,107 +1,81 @@
 import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
-import SectionTitle from './SectionTitle'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { faq } from '../data/faq'
+import { ChevronDown } from 'lucide-react'
 
-function FAQItem({ item, index, isOpen, onToggle }) {
-  return (
-    <div
-      className={`
-        border rounded-2xl overflow-hidden transition-all duration-200
-        ${isOpen
-          ? 'border-pool-300 shadow-md shadow-pool-500/10'
-          : 'border-slate-100 hover:border-pool-200'}
-      `}
-    >
-      <button
-        onClick={() => onToggle(index)}
-        aria-expanded={isOpen}
-        className="
-          w-full flex items-center justify-between
-          text-left px-6 py-5 gap-4
-          bg-white hover:bg-pool-50/50
-          transition-colors duration-150
-          focus:outline-none focus:ring-2 focus:ring-pool-400 focus:ring-inset
-        "
-      >
-        <span className="font-semibold text-slate-800 text-sm sm:text-base leading-snug">
-          {item.question}
-        </span>
-        <ChevronDown
-          className={`
-            w-5 h-5 shrink-0 text-pool-400
-            transition-transform duration-300
-            ${isOpen ? 'rotate-180' : ''}
-          `}
-        />
-      </button>
-
-      {/* Answer with smooth expand */}
-      <div
-        className={`
-          overflow-hidden transition-all duration-300 ease-in-out
-          ${isOpen ? 'max-h-96' : 'max-h-0'}
-        `}
-      >
-        <div className="px-6 pb-5 bg-white">
-          <div className="h-px bg-slate-100 mb-4" />
-          <p className="text-slate-500 text-sm leading-relaxed">
-            {item.answer}
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
+const FAQS = [
+  {
+    q: '¿Hay estacionamiento disponible?',
+    a: 'Sí, contamos con espacio de estacionamiento privado para tus invitados. No tendrás que preocuparte por parqueo en la calle. Si esperas muchos vehículos, avísanos al reservar para coordinarlo.',
+  },
+  {
+    q: '¿Puedo contratar un DJ o traer equipo de sonido?',
+    a: 'Puedes traer tu propio equipo de sonido o parlantes. Pedimos que la música sea a un volumen moderado y respetuoso con los vecinos, especialmente después de las 6:00 PM.',
+  },
+  {
+    q: '¿Cuánto es el depósito para reservar y cómo lo pago?',
+    a: 'El depósito para apartar tu fecha es de $100. Al momento de reservar te daremos los detalles para realizar el pago. El resto se liquida el día del evento.',
+  },
+  {
+    q: '¿Qué pasa si necesito cancelar mi reservación?',
+    a: 'Entendemos que los imprevistos ocurren. Sin embargo, el depósito de $100 no es reembolsable en caso de cancelación. Si necesitas cambiar la fecha, contáctanos con anticipación y haremos lo posible para ayudarte.',
+  },
+  {
+    q: '¿Está permitido llevar mascotas?',
+    a: 'Las mascotas se evalúan caso a caso. Escríbenos al reservar con los detalles de tu mascota (tipo, tamaño) y te confirmamos la disponibilidad. La seguridad de todos en el espacio es nuestra prioridad.',
+  },
+  {
+    q: '¿Puedo traer mi propia comida, bebidas y decoraciones?',
+    a: '¡Absolutamente! Puedes traer todo lo que necesites para tu evento: comida, bebidas, torta, decoraciones, etc. Contamos con área de BBQ y mesas disponibles. Solo pedimos que dejes el espacio en las mismas condiciones que lo encontraste.',
+  },
+  {
+    q: '¿A qué hora tengo acceso y hasta qué hora puedo estar?',
+    a: 'El acceso es de 10:00 AM a 7:00 PM (9 horas). Si necesitas tiempo extra, podemos coordinar horas adicionales a $50 por hora, sujeto a disponibilidad. Te recomendamos mencionarlo al reservar.',
+  },
+]
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(0)
-  const listRef = useScrollAnimation(0.05)
-
-  const handleToggle = (i) => setOpenIndex(prev => prev === i ? null : i)
+  const ref = useScrollAnimation()
+  const [openIdx, setOpenIdx] = useState(null)
 
   return (
-    <section id="faq" className="py-20 lg:py-28 bg-slate-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="py-24 bg-cream-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
 
-        <SectionTitle
-          eyebrow="Preguntas Frecuentes"
-          title="¿Tienes dudas? Aquí las resolvemos"
-          subtitle="Las preguntas más comunes sobre Hacienda834, respondidas de forma clara y directa."
-        />
+          <div className="text-center mb-14">
+            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-pool-500 mb-3">Preguntas Frecuentes</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-slate-800">
+              Todo lo que quieres saber
+            </h2>
+          </div>
 
-        <div ref={listRef} className="reveal space-y-3">
-          {faq.map((item, i) => (
-            <FAQItem
-              key={i}
-              item={item}
-              index={i}
-              isOpen={openIndex === i}
-              onToggle={handleToggle}
-            />
-          ))}
-        </div>
-
-        {/* CTA at bottom */}
-        <div className="mt-12 text-center">
-          <p className="text-slate-500 text-sm mb-4">
-            ¿Tu pregunta no está aquí? Escríbenos por WhatsApp.
-          </p>
-          <a
-            href={`${import.meta.env.VITE_WA_URL || 'https://wa.me/19399692376'}?text=${encodeURIComponent('Hola, tengo una pregunta sobre Hacienda834.')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              inline-flex items-center gap-2
-              bg-green-500 hover:bg-green-600
-              text-white font-semibold text-sm
-              px-6 py-3 rounded-full
-              transition-all hover:shadow-lg hover:shadow-green-500/30
-            "
-          >
-            Preguntar por WhatsApp
-          </a>
+          <div ref={ref} className="reveal">
+            {FAQS.map((item, i) => {
+              const isOpen = openIdx === i
+              return (
+                <div key={i} className="border-b border-cream-200">
+                  <button
+                    className="w-full text-left flex items-center justify-between gap-4 py-5 bg-transparent border-none cursor-pointer font-sans"
+                    onClick={() => setOpenIdx(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-base font-semibold text-slate-800">{item.q}</span>
+                    <ChevronDown
+                      size={20}
+                      className="flex-shrink-0 text-pool-500 transition-transform duration-300"
+                      style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                    />
+                  </button>
+                  <div
+                    className="overflow-hidden transition-all duration-400"
+                    style={{ maxHeight: isOpen ? 400 : 0 }}
+                  >
+                    <p className="text-slate-500 text-sm leading-relaxed pb-5">{item.a}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -1,100 +1,65 @@
-import { AlertTriangle, ShieldAlert } from 'lucide-react'
-import SectionTitle from './SectionTitle'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { pricing } from '../data/pricing'
 
 const RULES = [
-  {
-    icon:  ShieldAlert,
-    title: 'Salvavidas obligatorio para menores de 6 años',
-    body:
-      'Todo menor de 6 años tiene que usar salvavidas obligatorio o no podrá hacer uso de la piscina. Esta regla es por la seguridad y bienestar de los más pequeños.',
-    severity: 'high',   // rojo
-  },
-  {
-    icon:  AlertTriangle,
-    title: 'No hay devolución por cancelación',
-    body:
-      'Si se cancela la actividad no hay devolución del dinero, incluyendo el depósito. Asegúrate de confirmar bien tu fecha antes de reservar.',
-    severity: 'warning', // ámbar
-  },
+  { icon: '✅', title: 'Ambiente familiar y respetuoso',    sub: 'Apto para niños, adultos y personas mayores' },
+  { icon: '🎵', title: 'Música permitida con moderación',  sub: 'Parlantes o equipo propio bienvenidos'        },
+  { icon: '🍽️', title: 'Puedes traer tu comida y bebidas', sub: 'Área de BBQ y parrilleras disponibles'        },
+  { icon: '🧹', title: 'Dejar el espacio limpio al salir', sub: 'Limpieza incluida en el precio total'         },
+  { icon: '🐾', title: 'Mascotas — consultar disponibilidad', sub: 'Pregunta al reservar tu fecha'             },
 ]
 
-const SEVERITY = {
-  high: {
-    bg:     'bg-red-50',
-    border: 'border-red-200',
-    icon:   'bg-red-100 text-red-600',
-    title:  'text-red-900',
-    body:   'text-red-700',
-    badge:  'bg-red-100 text-red-600',
-    label:  'Obligatorio',
-  },
-  warning: {
-    bg:     'bg-amber-50',
-    border: 'border-amber-200',
-    icon:   'bg-amber-100 text-amber-600',
-    title:  'text-amber-900',
-    body:   'text-amber-700',
-    badge:  'bg-amber-100 text-amber-600',
-    label:  'Importante',
-  },
-}
-
 export default function Rules() {
-  const ref = useScrollAnimation()
+  const refL = useScrollAnimation()
+  const refR = useScrollAnimation()
 
   return (
-    <section id="reglas" className="py-20 lg:py-28 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="reglas" className="py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
 
-        <SectionTitle
-          eyebrow="Reglas"
-          title="Reglas importantes a tener en cuenta"
-          subtitle="Para garantizar la seguridad y el disfrute de todos, es fundamental respetar estas normas."
-        />
+          {/* Left */}
+          <div ref={refL} className="reveal">
+            <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-pool-500 mb-3">Horario &amp; Reglas</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-slate-800 mb-6">
+              Transparente y claro,<br />sin sorpresas
+            </h2>
+            <p className="text-slate-500 leading-relaxed mb-8">
+              Queremos que tu evento sea perfecto. Por eso te compartimos todo lo que necesitas saber antes de reservar.
+            </p>
 
-        <div ref={ref} className="reveal space-y-5">
-          {RULES.map((rule, i) => {
-            const Icon = rule.icon
-            const s    = SEVERITY[rule.severity]
+            <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 mb-4 flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-pool-50 flex items-center justify-center text-2xl flex-shrink-0">⏰</div>
+              <div>
+                <div className="text-xs font-bold text-pool-500 uppercase tracking-wider mb-0.5">Horario de uso</div>
+                <div className="text-xl font-extrabold text-slate-800">{pricing.schedule.start} – {pricing.schedule.end}</div>
+                <div className="text-sm text-slate-500 mt-0.5">9 horas de disfrute · Hora extra ${pricing.schedule.extraHour}</div>
+              </div>
+            </div>
 
-            return (
-              <div
-                key={i}
-                className={`
-                  flex gap-5 p-6 rounded-2xl border-2
-                  ${s.bg} ${s.border}
-                `}
-              >
-                {/* Icon */}
-                <div className={`shrink-0 inline-flex p-3 rounded-xl h-fit ${s.icon}`}>
-                  <Icon className="w-6 h-6" />
-                </div>
+            <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-pool-50 flex items-center justify-center text-2xl flex-shrink-0">👥</div>
+              <div>
+                <div className="text-xs font-bold text-pool-500 uppercase tracking-wider mb-0.5">Capacidad</div>
+                <div className="text-xl font-extrabold text-slate-800">Hasta {pricing.capacity} personas</div>
+                <div className="text-sm text-slate-500 mt-0.5">Persona adicional: ${pricing.extraPersonCost} c/u</div>
+              </div>
+            </div>
+          </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-center gap-3 mb-2">
-                    <h3 className={`font-serif font-bold text-lg ${s.title}`}>
-                      {rule.title}
-                    </h3>
-                    <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${s.badge}`}>
-                      {s.label}
-                    </span>
-                  </div>
-                  <p className={`text-sm leading-relaxed ${s.body}`}>
-                    {rule.body}
-                  </p>
+          {/* Right */}
+          <div ref={refR} className="reveal delay-200 flex flex-col gap-3">
+            {RULES.map(r => (
+              <div key={r.title} className="bg-white rounded-3xl border border-cream-200 shadow-sm p-4 flex items-start gap-4 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+                <div className="w-10 h-10 rounded-xl bg-pool-50 flex items-center justify-center text-lg flex-shrink-0 mt-0.5">{r.icon}</div>
+                <div>
+                  <div className="font-bold text-sm text-slate-800">{r.title}</div>
+                  <div className="text-xs text-slate-500 mt-1">{r.sub}</div>
                 </div>
               </div>
-            )
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* Footer note */}
-        <div className="mt-8 text-center">
-          <p className="text-slate-400 text-sm">
-            El cumplimiento de estas reglas es responsabilidad de quien realiza la reservación.
-          </p>
         </div>
       </div>
     </section>

@@ -1,150 +1,98 @@
-import { useState } from 'react'
-import { Phone, MessageCircle, ChevronDown, Star } from 'lucide-react'
-import { contact } from '../data/contact'
-import CalendarModal from './CalendarModal'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
+
+const STATS = [
+  { value: '40',  label: 'Personas máx.' },
+  { value: '9h',  label: 'De diversión'  },
+  { value: '$450', label: 'Todo incluido' },
+  { value: '5',   label: 'Amenidades'    },
+]
+
+const BADGES = ['🔒 100% Privado', '📍 Guaynabo, Puerto Rico', '🏊 Piscina Incluida']
 
 export default function Hero() {
-  const [showCalendar, setShowCalendar] = useState(false)
-  const whatsappUrl = `${contact.whatsapp}?text=${encodeURIComponent(contact.whatsappMessage)}`
+  const ref = useScrollAnimation()
 
   return (
-    <section
-      id="inicio"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* ── Background image + overlay ──────────────────────────────────── */}
+    <section id="inicio" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background */}
       <div
-        className="absolute inset-0 bg-cover bg-top bg-no-repeat"
-        style={{ backgroundImage: "url('/hero.jpg')" }}
+        className="absolute inset-0 bg-center bg-cover"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1572331165267-854da2b021cf?w=1920&q=80')" }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-pool-900/85 via-pool-800/75 to-pool-700/65" />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-pool-900/88 via-pool-800/72 to-pool-700/50" />
 
-      {/* ── Wave bottom ────────────────────────────────────────────── */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <path
-            fill="#f8f4ed"
-            d="M0,40 C240,90 480,10 720,50 C960,90 1200,20 1440,60 L1440,100 L0,100 Z"
-          />
-        </svg>
-      </div>
+      <div ref={ref} className="reveal relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={{ paddingTop: 120, paddingBottom: 80 }}>
 
-      {/* ── Main content ────────────────────────────────────────────── */}
-      <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto pt-24 pb-32">
-
-        {/* Badge */}
-        <button
-          onClick={() => setShowCalendar(true)}
-          className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 hover:border-white/40 text-white/90 text-xs sm:text-sm font-medium px-4 py-2 rounded-full mb-8 animate-fade-in transition-all cursor-pointer"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-          </span>
-          Reservaciones Disponibles
-        </button>
-
-        {showCalendar && <CalendarModal onClose={() => setShowCalendar(false)} />}
-
-        {/* Logo completo */}
-        <div className="flex justify-center mb-6 animate-fade-in-up">
-          <img
-            src="/logo.png"
-            alt="Hacienda834"
-            className="w-full max-w-xs sm:max-w-sm lg:max-w-md rounded-2xl shadow-2xl"
-            onError={e => {
-              e.target.style.display = 'none'
-              e.target.nextSibling.style.display = 'block'
-            }}
-          />
-          {/* Fallback texto si no hay logo.png */}
-          <h1
-            className="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-none hidden"
-            style={{display:'none'}}
-          >
-            Hacienda<span className="text-sand-300">834</span>
-          </h1>
-        </div>
-
-        {/* Subheadline */}
-        <p className="text-xl sm:text-2xl text-white/90 font-light mb-5 animate-fade-in-up">
-          Tu espacio privado con piscina para celebrar y crear recuerdos
-        </p>
-
-        {/* Description */}
-        <p className="text-base sm:text-lg text-white/65 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up">
-          Hacienda834, el espacio ideal para compartir en familia, celebrar y disfrutar
-          de un ambiente privado con piscina. Comodidad, diversión y privacidad
-          en un solo lugar.
-        </p>
-
-        {/* Stars */}
-        <div className="flex items-center justify-center gap-1 mb-10 animate-fade-in">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="w-5 h-5 text-sand-300 fill-sand-300" />
+        {/* Badges */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {BADGES.map(b => (
+            <span key={b} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide text-white bg-white/15 border border-white/25">
+              {b}
+            </span>
           ))}
-          <span className="ml-2 text-white/60 text-sm">Experiencia 5 estrellas</span>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              flex items-center gap-2.5
-              bg-green-500 hover:bg-green-600
-              text-white font-semibold
-              px-8 py-4 rounded-full text-base
-              transition-all
-              hover:shadow-2xl hover:shadow-green-500/40
-              hover:-translate-y-1
-              w-full sm:w-auto justify-center
-            "
-          >
-            <MessageCircle className="w-5 h-5" />
-            Reservar por WhatsApp
-          </a>
+        {/* Headline */}
+        <h1
+          className="text-white mb-6 font-sans font-black"
+          style={{ fontSize: 'clamp(2.4rem,6vw,5rem)', maxWidth: 720, lineHeight: 1.05, letterSpacing: '-0.03em' }}
+        >
+          Tu Paraíso<br />
+          <span style={{ background: 'linear-gradient(90deg,#4aa36d,#77bc92)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            Privado
+          </span><br />
+          con Piscina
+        </h1>
 
-          <a
-            href={contact.phoneLink}
-            className="
-              flex items-center gap-2.5
-              bg-white/10 hover:bg-white/20
-              backdrop-blur-sm border border-white/30
-              text-white font-semibold
-              px-8 py-4 rounded-full text-base
-              transition-all
-              hover:-translate-y-1
-              w-full sm:w-auto justify-center
-            "
-          >
-            <Phone className="w-5 h-5" />
-            Llamar ahora
-          </a>
+        {/* Subline */}
+        <p
+          className="text-white/75 mb-10"
+          style={{ fontSize: 'clamp(1rem,2.5vw,1.2rem)', maxWidth: 540, lineHeight: 1.65 }}
+        >
+          Celebra, relájate y crea recuerdos que duran. Espacio exclusivo hasta 40 personas — solo para ti y los tuyos, sin extraños.
+        </p>
 
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row gap-3">
           <a
-            href="#precios"
-            className="
-              flex items-center gap-2.5
-              bg-sand-400 hover:bg-sand-500
-              text-white font-semibold
-              px-8 py-4 rounded-full text-base
-              transition-all
-              hover:shadow-2xl hover:shadow-sand-400/30
-              hover:-translate-y-1
-              w-full sm:w-auto justify-center
-            "
+            href="#reservar"
+            className="inline-flex items-center justify-center gap-2 font-bold text-white px-8 py-4 rounded-2xl text-base transition-all hover:-translate-y-1"
+            style={{ background: 'linear-gradient(135deg,#2a8a4f,#0d9488)', boxShadow: '0 6px 24px rgba(42,138,79,.55)' }}
           >
-            Ver precios
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Reservar Mi Fecha
           </a>
+          <a
+            href="tel:+19399692376"
+            className="inline-flex items-center justify-center gap-2 font-semibold text-white px-8 py-4 rounded-2xl text-base transition-all hover:-translate-y-1"
+            style={{ background: 'rgba(255,255,255,.12)', border: '1.5px solid rgba(255,255,255,.25)', backdropFilter: 'blur(8px)' }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.43 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            (939) 969-2376
+          </a>
+        </div>
+
+        {/* Stats */}
+        <div className="flex flex-wrap gap-8 mt-14 pt-10" style={{ borderTop: '1px solid rgba(255,255,255,.15)' }}>
+          {STATS.map(s => (
+            <div key={s.label}>
+              <div className="text-white font-serif" style={{ fontSize: '2.2rem', fontWeight: 700, lineHeight: 1 }}>{s.value}</div>
+              <div className="text-white/55 text-sm font-medium mt-1">{s.label}</div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* ── Scroll indicator ────────────────────────────────────────────── */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <ChevronDown className="w-8 h-8 text-white/40" />
+      {/* Wave transition */}
+      <div className="absolute bottom-0 left-0 right-0 wave">
+        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: 60 }}>
+          <path d="M0,40 C360,0 1080,80 1440,40 L1440,60 L0,60 Z" fill="#f8f4ed" />
+        </svg>
       </div>
     </section>
   )
