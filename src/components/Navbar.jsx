@@ -1,166 +1,110 @@
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
-import { contact } from '../data/contact'
 
-const NAV_LINKS = [
-  { label: 'Inicio',    href: '#inicio'    },
-  { label: 'Nosotros',  href: '#nosotros'  },
-  { label: 'Galería',   href: '#galeria'   },
-  { label: 'Precios',   href: '#precios'   },
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Contacto',  href: '#contacto'  },
+const links = [
+  { href: '#amenidades', label: 'Amenidades' },
+  { href: '#precios',    label: 'Precios'    },
+  { href: '#reservar',   label: 'Reservar'   },
+  { href: '#faq',        label: 'FAQ'        },
 ]
 
-function Logo({ scrolled }) {
-  return (
-    <a href="#inicio" className="flex items-center shrink-0" aria-label="Hacienda834 — inicio">
-      {/* Logo image — sube /logo.png a la carpeta public para activarlo */}
-      <img
-        src="/logo.png"
-        alt="Hacienda834"
-        className="h-12 lg:h-14 w-auto"
-        onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }}
-      />
-      {/* Fallback texto si no hay logo.png */}
-      <span className="items-center gap-1 hidden" style={{display:'none'}}>
-        <span className={`font-serif text-xl lg:text-2xl font-bold tracking-tight transition-colors ${
-          scrolled ? 'text-pool-800' : 'text-white'
-        }`}>
-          Hacienda
-        </span>
-        <span className={`font-serif text-xl lg:text-2xl font-black transition-colors ${
-          scrolled ? 'text-sand-300' : 'text-sand-200'
-        }`}>
-          834
-        </span>
-      </span>
-    </a>
-  )
-}
-
 export default function Navbar() {
-  const [isOpen,   setIsOpen]   = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [open,     setOpen]     = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const reserveUrl = `${contact.whatsapp}?text=${encodeURIComponent(contact.whatsappMessage)}`
+  const close = () => setOpen(false)
 
   return (
-    <header
-      className={`
-        fixed top-0 left-0 right-0 z-40
-        transition-all duration-300
-        ${scrolled
-          ? 'bg-cream-100/95 backdrop-blur-md shadow-md border-b border-sand-200'
-          : 'bg-transparent'}
-      `}
-    >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled ? 'bg-cream-100/95 backdrop-blur-md shadow-md border-b border-cream-200' : ''
+    }`} style={{ height: 68 }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
-          <Logo scrolled={scrolled} />
-
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map(link => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`
-                  px-3 py-2 text-sm font-medium rounded-lg
-                  transition-colors
-                  ${scrolled
-                    ? 'text-pool-800 hover:text-pool-600 hover:bg-pool-50'
-                    : 'text-white/85 hover:text-white hover:bg-white/10'}
-                `}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Reserve button — desktop */}
-          <a
-            href={reserveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              hidden md:inline-flex items-center gap-2
-              bg-pool-600 hover:bg-pool-700
-              text-white text-sm font-semibold
-              px-5 py-2.5 rounded-full
-              transition-all
-              hover:shadow-lg hover:shadow-pool-600/30
-              hover:-translate-y-0.5
-              border border-sand-300/30
-            "
+        {/* Logo */}
+        <a href="#inicio" className="flex items-center gap-2.5 no-underline">
+          <img
+            src="/logo.png"
+            alt="Hacienda834"
+            className="h-10 w-auto object-contain"
+            onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block' }}
+          />
+          <span
+            style={{ display: 'none' }}
+            className={`font-serif text-xl font-bold tracking-tight transition-colors duration-300 ${scrolled ? 'text-pool-900' : 'text-white'}`}
           >
-            Reservar
-          </a>
+            Hacienda<span className="text-sand-300">834</span>
+          </span>
+        </a>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
-            className={`
-              md:hidden p-2 rounded-lg transition-colors
-              ${scrolled
-                ? 'text-pool-800 hover:bg-pool-50'
-                : 'text-white hover:bg-white/10'}
-            `}
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-1">
+          {links.map(l => (
+            <a
+              key={l.href}
+              href={l.href}
+              className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                scrolled
+                  ? 'text-slate-600 hover:text-pool-600 hover:bg-pool-50'
+                  : 'text-white/80 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              {l.label}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile menu */}
-        <div
-          className={`
-            md:hidden overflow-hidden transition-all duration-300 ease-in-out
-            ${isOpen ? 'max-h-screen pb-4' : 'max-h-0'}
-          `}
+        {/* CTA */}
+        <a
+          href="#reservar"
+          className="hidden md:inline-flex items-center gap-1.5 text-sm font-bold px-5 py-2.5 rounded-full text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+          style={{ background: 'linear-gradient(135deg, #2a8a4f 0%, #1a6b3a 100%)', boxShadow: '0 4px 14px rgba(42,138,79,.4)' }}
         >
-          <div className="bg-cream-100 rounded-2xl shadow-2xl mt-1 overflow-hidden border border-sand-200">
-            {NAV_LINKS.map(link => (
+          Reservar Mi Fecha →
+        </a>
+
+        {/* Hamburger */}
+        <button
+          className={`md:hidden p-2 rounded-xl transition-colors ${scrolled ? 'text-pool-900 bg-pool-50' : 'text-white bg-white/10'}`}
+          onClick={() => setOpen(o => !o)}
+          aria-label="Menú"
+          style={{ border: 'none', cursor: 'pointer' }}
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="md:hidden bg-white border-t border-cream-200 shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
+            {links.map(l => (
               <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="
-                  flex items-center px-6 py-3.5
-                  text-pool-800 font-medium text-sm
-                  hover:bg-pool-50 hover:text-pool-600
-                  transition-colors border-b border-sand-100 last:border-0
-                "
+                key={l.href}
+                href={l.href}
+                onClick={close}
+                className="block px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-pool-50 hover:text-pool-600 transition-colors"
               >
-                {link.label}
+                {l.label}
               </a>
             ))}
-            <div className="px-6 py-4 bg-cream-200">
-              <a
-                href={reserveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-                className="
-                  block w-full text-center
-                  bg-pool-600 hover:bg-pool-700
-                  text-white font-semibold text-sm
-                  py-3 rounded-full
-                  transition-colors
-                "
-              >
-                Reservar por WhatsApp
-              </a>
-            </div>
+            <a
+              href="#reservar"
+              onClick={close}
+              className="mt-2 flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-bold text-white"
+              style={{ background: 'linear-gradient(135deg, #2a8a4f, #1a6b3a)' }}
+            >
+              Reservar Mi Fecha →
+            </a>
           </div>
         </div>
-      </nav>
-    </header>
+      )}
+    </nav>
   )
 }

@@ -37,8 +37,8 @@ export default {
         },
       },
       fontFamily: {
-        sans:  ['Montserrat', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans:  ["'Plus Jakarta Sans'", 'system-ui', 'sans-serif'],
+        serif: ["'Playfair Display'", 'serif'],
       },
       keyframes: {
         fadeInUp: {

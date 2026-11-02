@@ -1,15 +1,11 @@
 import Navbar        from './components/Navbar'
 import Hero          from './components/Hero'
-import About         from './components/About'
-import Gallery       from './components/Gallery'
-import Videos        from './components/Videos'
-import Pricing       from './components/Pricing'
-import Services      from './components/Services'
-import Extras        from './components/Extras'
+import TrustStrip    from './components/TrustStrip'
+import Amenities     from './components/Amenities'
 import Rules         from './components/Rules'
-import FAQ           from './components/FAQ'
+import Pricing       from './components/Pricing'
 import Contact       from './components/Contact'
-import CTA           from './components/CTA'
+import FAQ           from './components/FAQ'
 import Footer        from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import Admin         from './components/Admin'
@@ -20,21 +16,15 @@ export default function App() {
   return (
     <div className="font-sans">
       <Navbar />
-
       <main>
         <Hero />
-        <About />
-        <Gallery />
-        <Videos />
-        <Pricing />
-        <Services />
-        <Extras />
+        <TrustStrip />
+        <Amenities />
         <Rules />
-        <FAQ />
+        <Pricing />
         <Contact />
-        <CTA />
+        <FAQ />
       </main>
-
       <Footer />
       <WhatsAppButton />
     </div>
