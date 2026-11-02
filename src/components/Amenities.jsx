@@ -33,7 +33,7 @@ export default function Amenities() {
             style={{ gridColumn: '1 / 3', gridRow: '1 / 3' }}
           >
             <img
-              src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=80"
+              src="/piscina1.jpeg"
               alt="Piscina privada Hacienda834"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
@@ -53,7 +53,7 @@ export default function Amenities() {
           {/* Billar */}
           <div className="relative rounded-3xl overflow-hidden group">
             <img
-              src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=600&q=80"
+              src="/foto-billar2.jpeg"
               alt="Mesa de billar"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
@@ -69,7 +69,7 @@ export default function Amenities() {
           {/* Cancha */}
           <div className="relative rounded-3xl overflow-hidden group">
             <img
-              src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&q=80"
+              src="/Cancha.jpeg"
               alt="Cancha de baloncesto"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
@@ -83,29 +83,34 @@ export default function Amenities() {
           </div>
 
           {/* BBQ */}
-          <div className="relative rounded-3xl overflow-hidden bg-pool-900">
-            <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 60% at 30% 70%, rgba(42,138,79,.4), transparent)' }} />
-            <div className="relative z-10 h-full flex flex-col justify-between p-5">
-              <div className="text-3xl">🍖</div>
-              <div>
-                <h3 className="text-white font-sans font-extrabold text-base">BBQ & Dominó</h3>
-                <p className="text-white/55 text-xs mt-1">El sabor de la isla en tu evento</p>
-              </div>
+          <div className="relative rounded-3xl overflow-hidden group">
+            <img
+              src="/foto-bbq.jpg"
+              alt="Área de BBQ"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/80 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <div className="text-2xl mb-1">🍖</div>
+              <h3 className="text-white font-sans font-extrabold text-base">BBQ & Dominó</h3>
+              <p className="text-white/55 text-xs mt-1">El sabor de la isla en tu evento</p>
             </div>
           </div>
 
           {/* Espacio Techado */}
-          <div
-            className="relative rounded-3xl overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #2a8a4f 0%, #0d9488 100%)' }}
-          >
-            <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='10' fill='%23ffffff'/%3E%3C/svg%3E\")" }} />
-            <div className="relative z-10 h-full flex flex-col justify-between p-5">
-              <div className="text-3xl">🏠</div>
-              <div>
-                <h3 className="text-white font-sans font-extrabold text-base">Espacio Techado</h3>
-                <p className="text-white/70 text-xs mt-1">Para eventos con lluvia o sol</p>
-              </div>
+          <div className="relative rounded-3xl overflow-hidden group">
+            <img
+              src="/area interior.jpeg"
+              alt="Espacio techado"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/80 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-5">
+              <div className="text-2xl mb-1">🏠</div>
+              <h3 className="text-white font-sans font-extrabold text-base">Espacio Techado</h3>
+              <p className="text-white/70 text-xs mt-1">Para eventos con lluvia o sol</p>
             </div>
           </div>
         </div>
