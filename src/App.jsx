@@ -2,6 +2,8 @@ import Navbar        from './components/Navbar'
 import Hero          from './components/Hero'
 import TrustStrip    from './components/TrustStrip'
 import Amenities     from './components/Amenities'
+import Gallery       from './components/Gallery'
+import Videos        from './components/Videos'
 import Rules         from './components/Rules'
 import Pricing       from './components/Pricing'
 import Contact       from './components/Contact'
@@ -20,6 +22,8 @@ export default function App() {
         <Hero />
         <TrustStrip />
         <Amenities />
+        <Gallery />
+        <Videos />
         <Rules />
         <Pricing />
         <Contact />
