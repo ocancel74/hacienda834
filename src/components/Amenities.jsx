@@ -5,7 +5,7 @@ export default function Amenities() {
       {/* ── Banner hero ancho ── */}
       <div className="relative overflow-hidden" style={{ height: 'clamp(260px, 40vw, 420px)' }}>
         <img
-          src="/vista-general.jpeg"
+          src="/piscina-dia.webp"
           alt="Hacienda834 espacio completo"
           className="w-full h-full object-cover object-center"
         />
@@ -39,7 +39,7 @@ export default function Amenities() {
 
           {/* Piscina — hero, 2 rows */}
           <div className="relative rounded-3xl overflow-hidden group" style={{ gridRow: '1 / 3' }}>
-            <img src="/pisinanoche.jpg" alt="Piscina privada" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <img src="/piscina-dia.webp" alt="Piscina privada" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,40,18,0.92) 0%, rgba(8,40,18,0.4) 50%, transparent 100%)' }} />
             <div className="absolute top-5 left-5">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white" style={{ background: 'rgba(42,138,79,0.9)', backdropFilter: 'blur(8px)' }}>
@@ -65,7 +65,7 @@ export default function Amenities() {
             <img src="/foto-billar.jpeg" alt="Mesa de billar" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,40,18,0.88) 0%, transparent 55%)' }} />
             <div className="absolute bottom-0 left-0 p-5">
-              <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Entretenimiento</p>
+              <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Entretenimiento Terraza</p>
               <h3 className="text-white font-extrabold text-lg">Mesa de Billar</h3>
               <p className="text-white/55 text-xs mt-0.5">Nivel profesional</p>
             </div>
@@ -77,7 +77,7 @@ export default function Amenities() {
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,40,18,0.88) 0%, transparent 55%)' }} />
             <div className="absolute bottom-0 left-0 p-5">
               <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Deportes</p>
-              <h3 className="text-white font-extrabold text-lg">Cancha de Basket</h3>
+              <h3 className="text-white font-extrabold text-lg">Media Cancha de Basket</h3>
               <p className="text-white/55 text-xs mt-0.5">Full court privada</p>
             </div>
           </div>
@@ -93,14 +93,14 @@ export default function Amenities() {
             </div>
           </div>
 
-          {/* Techado */}
+          {/* Comedor */}
           <div className="relative rounded-3xl overflow-hidden group">
-            <img src="/area mesas.jpeg" alt="Espacio techado" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+            <img src="/Sombrillas-Bano.jpeg" alt="Comedor al aire libre" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,40,18,0.88) 0%, transparent 55%)' }} />
             <div className="absolute bottom-0 left-0 p-5">
               <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Área cubierta</p>
-              <h3 className="text-white font-extrabold text-lg">Espacio Techado</h3>
-              <p className="text-white/55 text-xs mt-0.5">Con lluvia o sol</p>
+              <h3 className="text-white font-extrabold text-lg">Comedor al Aire Libre</h3>
+              <p className="text-white/55 text-xs mt-0.5">Con sombrillas</p>
             </div>
           </div>
 
@@ -109,7 +109,7 @@ export default function Amenities() {
         {/* Mobile */}
         <div className="lg:hidden flex flex-col gap-3">
           <div className="relative rounded-3xl overflow-hidden" style={{ height: 280 }}>
-            <img src="/pisinanoche.jpg" alt="Piscina" className="w-full h-full object-cover" />
+            <img src="/piscina-dia.webp" alt="Piscina" className="w-full h-full object-cover object-center" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,40,18,0.9) 0%, rgba(8,40,18,0.3) 50%, transparent 100%)' }} />
             <div className="absolute top-4 left-4">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: 'rgba(42,138,79,0.9)' }}>⭐ AMENIDAD PRINCIPAL</span>
@@ -122,10 +122,10 @@ export default function Amenities() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { src: '/foto-billar.jpeg', cat: 'Entretenimiento', title: 'Mesa de Billar', sub: 'Nivel profesional' },
-              { src: '/Cancha.jpeg',      cat: 'Deportes',        title: 'Cancha de Basket', sub: 'Full court privada' },
-              { src: '/foto-bbq.jpg',     cat: 'Cocina',          title: 'BBQ & Dominó',   sub: 'El sabor de la isla' },
-              { src: '/area mesas.jpeg',  cat: 'Área cubierta',   title: 'Espacio Techado', sub: 'Con lluvia o sol' },
+              { src: '/foto-billar.jpeg',      cat: 'Entretenimiento Terraza', title: 'Mesa de Billar',          sub: 'Nivel profesional' },
+              { src: '/Cancha.jpeg',           cat: 'Deportes',               title: 'Media Cancha de Basket',  sub: 'Full court privada' },
+              { src: '/foto-bbq.jpg',          cat: 'Cocina al Aire Libre',   title: 'BBQ',                     sub: 'El sabor de la isla' },
+              { src: '/Sombrillas-Bano.jpeg',  cat: 'Área Cubierta',          title: 'Comedor al Aire Libre',   sub: 'Con sombrillas' },
             ].map(c => (
               <div key={c.title} className="relative rounded-2xl overflow-hidden" style={{ height: 160 }}>
                 <img src={c.src} alt={c.title} className="w-full h-full object-cover" loading="lazy" />
