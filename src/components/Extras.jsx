@@ -1,9 +1,9 @@
-import { Zap, Armchair, Home } from 'lucide-react'
+import { Zap, Armchair, Home, Refrigerator } from 'lucide-react'
 import SectionTitle from './SectionTitle'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 import { extras } from '../data/extras'
 
-const ICON_MAP = { Zap, Armchair, Home }
+const ICON_MAP = { Zap, Armchair, Home, Refrigerator }
 
 export default function Extras() {
   const gridRef = useScrollAnimation(0.05)

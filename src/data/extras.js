@@ -3,6 +3,15 @@
 
 export const extras = [
   {
+    id: 'cooler',
+    icon: 'Refrigerator',
+    title: 'Neverita',
+    description:
+      'Neverita grande para mantener tus bebidas y alimentos frescos durante todo el evento.',
+    pricing: [{ item: 'Alquiler por evento', cost: '$25.00' }],
+    note: null,
+  },
+  {
     id: 'bouncy-castle',
     icon: 'Zap',
     title: 'Casa de brinco',

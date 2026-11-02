@@ -4,6 +4,7 @@ import TrustStrip    from './components/TrustStrip'
 import Amenities     from './components/Amenities'
 import Gallery       from './components/Gallery'
 import Videos        from './components/Videos'
+import Extras        from './components/Extras'
 import Rules         from './components/Rules'
 import Pricing       from './components/Pricing'
 import Contact       from './components/Contact'
@@ -24,6 +25,7 @@ export default function App() {
         <Amenities />
         <Gallery />
         <Videos />
+        <Extras />
         <Rules />
         <Pricing />
         <Contact />
