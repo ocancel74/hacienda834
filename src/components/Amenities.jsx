@@ -66,7 +66,7 @@ export default function Amenities() {
         </div>
 
         {/* ── Mobile: 1 col hero + 2×2 ── */}
-        <div ref={ref} className="reveal lg:hidden flex flex-col gap-3">
+        <div className="lg:hidden flex flex-col gap-3">
           {/* Hero card */}
           <div
             className="relative rounded-3xl p-7 overflow-hidden"
@@ -109,7 +109,7 @@ export default function Amenities() {
 
         {/* ── Desktop Bento Grid ── */}
         <div
-          className="reveal hidden lg:grid gap-4"
+          className="hidden lg:grid gap-4"
           style={{ gridTemplateColumns: 'repeat(4,1fr)', gridTemplateRows: '280px 210px' }}
         >
           {/* Hero — Piscina (2×2) */}
