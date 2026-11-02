@@ -1,49 +1,5 @@
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
-const CELLS = [
-  {
-    key: 'piscina',
-    src: '/Piscina.jpeg',
-    alt: 'Piscina privada Hacienda834',
-    hero: true,
-    badge: '⭐ Amenidad Principal',
-    title: 'Piscina Cristalina Privada',
-    sub: 'Solo para tu grupo · Limpia y lista',
-  },
-  {
-    key: 'billar',
-    src: '/billar.jpeg',
-    alt: 'Mesa de billar',
-    icon: '🎱',
-    title: 'Mesa de Billar',
-    sub: 'Nivel profesional',
-  },
-  {
-    key: 'cancha',
-    src: '/cancha 1.jpeg',
-    alt: 'Cancha de baloncesto',
-    icon: '🏀',
-    title: 'Cancha de Basket',
-    sub: 'Full court privada',
-  },
-  {
-    key: 'bbq',
-    src: '/foto-bbq.jpg',
-    alt: 'Área de BBQ',
-    icon: '🍖',
-    title: 'BBQ & Dominó',
-    sub: 'El sabor de la isla en tu evento',
-  },
-  {
-    key: 'techado',
-    src: '/area mesas.jpeg',
-    alt: 'Espacio techado',
-    icon: '🏠',
-    title: 'Espacio Techado',
-    sub: 'Para eventos con lluvia o sol',
-  },
-]
-
 export default function Amenities() {
   const ref = useScrollAnimation()
 
@@ -58,101 +14,123 @@ export default function Amenities() {
             Todo lo que necesitas,<br />en un solo lugar
           </h2>
           <p className="text-base text-slate-500 max-w-md mx-auto leading-relaxed">
-            Cinco amenidades premium en un espacio completamente privado. No compartes nada con nadie.
+            Espacio 100% privado con cinco amenidades premium — todo incluido en un solo precio.
           </p>
         </div>
 
-        {/* ── Mobile layout: stacked cards ── */}
-        <div ref={ref} className="reveal lg:hidden flex flex-col gap-3">
-          {/* Pool — full width hero card */}
-          <div className="relative rounded-3xl overflow-hidden group" style={{ height: 260 }}>
-            <img src="/Piscina.jpeg" alt="Piscina privada" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 via-pool-900/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-pool-100 bg-pool-500/80 mb-2">⭐ Amenidad Principal</span>
-              <h3 className="text-white font-extrabold text-xl leading-tight">Piscina Cristalina Privada</h3>
-              <p className="text-white/65 text-sm mt-0.5">Solo para tu grupo · Limpia y lista</p>
-            </div>
-          </div>
+        {/* Grid — mobile: 1 col / tablet: 2 col / desktop: bento */}
+        <div ref={ref} className="reveal">
 
-          {/* 2x2 grid for the other 4 */}
-          <div className="grid grid-cols-2 gap-3">
-            {CELLS.slice(1).map(cell => (
-              <div key={cell.key} className="relative rounded-2xl overflow-hidden group" style={{ height: 160 }}>
-                <img src={cell.src} alt={cell.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 via-pool-900/10 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-3">
-                  <div className="text-lg mb-0.5">{cell.icon}</div>
-                  <h3 className="text-white font-extrabold text-sm leading-tight">{cell.title}</h3>
-                  <p className="text-white/60 text-xs mt-0.5 hidden sm:block">{cell.sub}</p>
+          {/* ── Mobile & Tablet (< lg) ── */}
+          <div className="lg:hidden flex flex-col gap-3">
+            {/* Piscina — foto real */}
+            <div className="relative rounded-3xl overflow-hidden group" style={{ height: 280 }}>
+              <img src="/Piscina.jpeg" alt="Piscina privada" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 via-pool-900/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-6">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold text-pool-100 bg-pool-500/90 mb-2">⭐ Amenidad Principal</span>
+                <h3 className="text-white font-extrabold text-2xl leading-tight">Piscina Cristalina<br />Privada</h3>
+                <p className="text-white/70 text-sm mt-1">Solo para tu grupo · Limpia y lista</p>
+              </div>
+            </div>
+
+            {/* 2×2 — stat cards */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-3xl p-5 flex flex-col justify-between" style={{ background: '#082812', minHeight: 150 }}>
+                <span className="text-3xl">🎱</span>
+                <div>
+                  <h3 className="text-white font-extrabold text-base">Mesa de Billar</h3>
+                  <p className="text-pool-300 text-xs mt-1">Nivel profesional</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Desktop Bento Grid ── */}
-        <div
-          ref={ref}
-          className="reveal hidden lg:grid gap-3"
-          style={{
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gridTemplateRows: '260px 210px',
-          }}
-        >
-          {/* Hero — Piscina */}
-          <div className="relative rounded-3xl overflow-hidden group" style={{ gridColumn: '1 / 3', gridRow: '1 / 3' }}>
-            <img src="/Piscina.jpeg" alt="Piscina privada Hacienda834" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 via-pool-900/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-7">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-pool-100 bg-pool-500/80 mb-3">⭐ Amenidad Principal</span>
-              <h3 className="text-white font-extrabold leading-tight" style={{ fontSize: 'clamp(1.4rem,2.5vw,1.9rem)' }}>Piscina Cristalina<br />Privada</h3>
-              <p className="text-white/65 text-sm mt-1">Solo para tu grupo · Limpia y lista</p>
+              <div className="relative rounded-3xl overflow-hidden group" style={{ minHeight: 150 }}>
+                <img src="/cancha 1.jpeg" alt="Cancha" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-4">
+                  <span className="text-2xl">🏀</span>
+                  <h3 className="text-white font-extrabold text-sm mt-1">Cancha de Basket</h3>
+                </div>
+              </div>
+              <div className="rounded-3xl p-5 flex flex-col justify-between" style={{ background: 'linear-gradient(135deg,#c9a84c,#b8932e)', minHeight: 150 }}>
+                <span className="text-3xl">🍖</span>
+                <div>
+                  <h3 className="text-pool-900 font-extrabold text-base">BBQ & Dominó</h3>
+                  <p className="text-pool-900/65 text-xs mt-1">El sabor de la isla</p>
+                </div>
+              </div>
+              <div className="rounded-3xl p-5 flex flex-col justify-between" style={{ background: 'linear-gradient(135deg,#2a8a4f,#1a6b3a)', minHeight: 150 }}>
+                <span className="text-3xl">🏠</span>
+                <div>
+                  <h3 className="text-white font-extrabold text-base">Espacio Techado</h3>
+                  <p className="text-white/60 text-xs mt-1">Con lluvia o sol</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Billar */}
-          <div className="relative rounded-3xl overflow-hidden group">
-            <img src="/billar.jpeg" alt="Mesa de billar" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <div className="text-2xl mb-1">🎱</div>
-              <h3 className="text-white font-extrabold text-base">Mesa de Billar</h3>
-              <p className="text-white/60 text-xs mt-0.5">Nivel profesional</p>
+          {/* ── Desktop Bento ── */}
+          <div
+            className="hidden lg:grid gap-4"
+            style={{
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gridTemplateRows: '270px 200px',
+            }}
+          >
+            {/* Hero — Piscina (foto real, 2×2) */}
+            <div className="relative rounded-3xl overflow-hidden group" style={{ gridColumn: '1 / 3', gridRow: '1 / 3' }}>
+              <img src="/Piscina.jpeg" alt="Piscina privada Hacienda834" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-pool-900/88 via-pool-900/25 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-8">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-pool-100 bg-pool-500/90 mb-3">⭐ Amenidad Principal</span>
+                <h3 className="text-white font-extrabold leading-tight" style={{ fontSize: '1.85rem' }}>Piscina Cristalina<br />Privada</h3>
+                <p className="text-white/65 text-sm mt-2">Solo para tu grupo · Limpia y lista</p>
+              </div>
             </div>
-          </div>
 
-          {/* Cancha */}
-          <div className="relative rounded-3xl overflow-hidden group">
-            <img src="/cancha 1.jpeg" alt="Cancha de baloncesto" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <div className="text-2xl mb-1">🏀</div>
-              <h3 className="text-white font-extrabold text-base">Cancha de Basket</h3>
-              <p className="text-white/60 text-xs mt-0.5">Full court privada</p>
+            {/* Billar — dark card */}
+            <div className="relative rounded-3xl overflow-hidden flex flex-col justify-between p-6" style={{ background: '#082812' }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 70% 60% at 20% 80%, rgba(42,138,79,.35), transparent)', pointerEvents: 'none' }} />
+              <div className="relative z-10 text-4xl">🎱</div>
+              <div className="relative z-10">
+                <p className="text-pool-400 text-xs font-bold uppercase tracking-widest mb-1">Entretenimiento</p>
+                <h3 className="text-white font-extrabold text-xl">Mesa de Billar</h3>
+                <p className="text-white/50 text-sm mt-1">Nivel profesional</p>
+              </div>
             </div>
-          </div>
 
-          {/* BBQ */}
-          <div className="relative rounded-3xl overflow-hidden group">
-            <img src="/foto-bbq.jpg" alt="Área de BBQ" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <div className="text-2xl mb-1">🍖</div>
-              <h3 className="text-white font-extrabold text-base">BBQ & Dominó</h3>
-              <p className="text-white/55 text-xs mt-0.5">El sabor de la isla</p>
+            {/* Cancha — foto real */}
+            <div className="relative rounded-3xl overflow-hidden group">
+              <img src="/cancha 1.jpeg" alt="Cancha de baloncesto" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-5">
+                <div className="text-2xl mb-1">🏀</div>
+                <h3 className="text-white font-extrabold text-base">Cancha de Basket</h3>
+                <p className="text-white/60 text-xs mt-0.5">Full court privada</p>
+              </div>
             </div>
-          </div>
 
-          {/* Espacio Techado */}
-          <div className="relative rounded-3xl overflow-hidden group">
-            <img src="/area mesas.jpeg" alt="Espacio techado" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-            <div className="absolute inset-0 bg-gradient-to-t from-pool-900/85 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-5">
-              <div className="text-2xl mb-1">🏠</div>
-              <h3 className="text-white font-extrabold text-base">Espacio Techado</h3>
-              <p className="text-white/70 text-xs mt-0.5">Con lluvia o sol</p>
+            {/* BBQ — gold card */}
+            <div className="relative rounded-3xl overflow-hidden flex flex-col justify-between p-6" style={{ background: 'linear-gradient(145deg,#c9a84c,#9a7a1f)' }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 80% 60% at 80% 20%, rgba(255,255,255,.15), transparent)', pointerEvents: 'none' }} />
+              <div className="relative z-10 text-4xl">🍖</div>
+              <div className="relative z-10">
+                <p className="text-pool-900/60 text-xs font-bold uppercase tracking-widest mb-1">Cocina al aire libre</p>
+                <h3 className="text-pool-900 font-extrabold text-xl">BBQ & Dominó</h3>
+                <p className="text-pool-900/65 text-sm mt-1">El sabor de la isla</p>
+              </div>
             </div>
+
+            {/* Espacio Techado — green card */}
+            <div className="relative rounded-3xl overflow-hidden flex flex-col justify-between p-6" style={{ background: 'linear-gradient(145deg,#2a8a4f,#145229)' }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 70% 60% at 80% 20%, rgba(119,188,146,.25), transparent)', pointerEvents: 'none' }} />
+              <div className="relative z-10 text-4xl">🏠</div>
+              <div className="relative z-10">
+                <p className="text-pool-200 text-xs font-bold uppercase tracking-widest mb-1">Área cubierta</p>
+                <h3 className="text-white font-extrabold text-xl">Espacio Techado</h3>
+                <p className="text-white/60 text-sm mt-1">Para eventos con lluvia o sol</p>
+              </div>
+            </div>
+
           </div>
         </div>
 
