@@ -67,7 +67,6 @@ export default function Amenities() {
             <div className="absolute bottom-0 left-0 p-5">
               <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Entretenimiento Terraza</p>
               <h3 className="text-white font-extrabold text-lg">Mesa de Billar</h3>
-              <p className="text-white/55 text-xs mt-0.5">Nivel profesional</p>
             </div>
           </div>
 
@@ -78,7 +77,6 @@ export default function Amenities() {
             <div className="absolute bottom-0 left-0 p-5">
               <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Deportes</p>
               <h3 className="text-white font-extrabold text-lg">Media Cancha de Basket</h3>
-              <p className="text-white/55 text-xs mt-0.5">Full court privada</p>
             </div>
           </div>
 
@@ -88,8 +86,7 @@ export default function Amenities() {
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,40,18,0.88) 0%, transparent 55%)' }} />
             <div className="absolute bottom-0 left-0 p-5">
               <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Cocina al aire libre</p>
-              <h3 className="text-white font-extrabold text-lg">BBQ & Dominó</h3>
-              <p className="text-white/55 text-xs mt-0.5">El sabor de la isla</p>
+              <h3 className="text-white font-extrabold text-lg">BBQ</h3>
             </div>
           </div>
 
@@ -98,7 +95,6 @@ export default function Amenities() {
             <img src="/Sombrillas-Bano.jpeg" alt="Comedor al aire libre" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,40,18,0.88) 0%, transparent 55%)' }} />
             <div className="absolute bottom-0 left-0 p-5">
-              <p className="text-pool-300 text-xs font-bold uppercase tracking-widest mb-1">Área cubierta</p>
               <h3 className="text-white font-extrabold text-lg">Comedor al Aire Libre</h3>
               <p className="text-white/55 text-xs mt-0.5">Con sombrillas</p>
             </div>
@@ -122,10 +118,10 @@ export default function Amenities() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { src: '/foto-billar.jpeg',      cat: 'Entretenimiento Terraza', title: 'Mesa de Billar',          sub: 'Nivel profesional' },
-              { src: '/Cancha.jpeg',           cat: 'Deportes',               title: 'Media Cancha de Basket',  sub: 'Full court privada' },
-              { src: '/foto-bbq.jpg',          cat: 'Cocina al Aire Libre',   title: 'BBQ',                     sub: 'El sabor de la isla' },
-              { src: '/Sombrillas-Bano.jpeg',  cat: 'Área Cubierta',          title: 'Comedor al Aire Libre',   sub: 'Con sombrillas' },
+              { src: '/foto-billar.jpeg',      cat: 'Entretenimiento Terraza', title: 'Mesa de Billar',         sub: '' },
+              { src: '/Cancha.jpeg',           cat: 'Deportes',               title: 'Media Cancha de Basket', sub: '' },
+              { src: '/foto-bbq.jpg',          cat: 'Cocina al Aire Libre',   title: 'BBQ',                    sub: '' },
+              { src: '/Sombrillas-Bano.jpeg',  cat: '',                       title: 'Comedor al Aire Libre',  sub: 'Con sombrillas' },
             ].map(c => (
               <div key={c.title} className="relative rounded-2xl overflow-hidden" style={{ height: 160 }}>
                 <img src={c.src} alt={c.title} className="w-full h-full object-cover" loading="lazy" />
