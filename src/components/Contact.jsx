@@ -102,7 +102,7 @@ export default function Contact() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5" htmlFor="f-fecha">Fecha del Evento</label>
-                <input id="f-fecha" type="date" className={inp} required min={tomorrow} value={form.fecha} onChange={e => set('fecha', e.target.value)} />
+                <input id="f-fecha" type="date" className={inp} required min={tomorrow} value={form.fecha} onChange={e => set('fecha', e.target.value)} style={{ colorScheme: 'light' }} />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
