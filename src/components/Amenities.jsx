@@ -5,7 +5,7 @@ export default function Amenities() {
       {/* ── Banner hero ancho ── */}
       <div className="relative overflow-hidden" style={{ height: 'clamp(260px, 40vw, 420px)' }}>
         <img
-          src="/piscina-dia.webp"
+          src="/vista-general.jpeg"
           alt="Hacienda834 espacio completo"
           className="w-full h-full object-cover object-center"
         />
